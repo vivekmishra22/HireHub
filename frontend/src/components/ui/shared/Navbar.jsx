@@ -48,7 +48,7 @@ const Navbar = () => {
                                         </Avatar>
                                         <div>
                                             <h4 className='font-medium'>Vivek Software Engineer</h4>
-                                            <p className='text-sm text-muted-foreground'>Lorem ipsum dolor sit amet.</p>
+                                            <p className='text-sm text-muted-foreground'>Lorem ipsum dolor sit.</p>
                                         </div>
                                     </div>
                                     <div className='flex flex-col my-3 text-gray-600'>
