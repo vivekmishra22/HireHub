@@ -4,9 +4,10 @@ import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { RadioGroup } from "@/components/ui/radio-group"
 import { Button } from '../button'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { USER_API_END_POINT } from '@/utils/constant'
+import { toast } from 'sonner'
 
 const Signup = () => {
 
@@ -19,6 +20,8 @@ const Signup = () => {
         file: ""
     });
 
+    const navigate = useNavigate();
+
     const changeEventHandler = (e) => {
         setInput({ ...input, [e.target.name]: e.target.value });
     };
@@ -30,10 +33,29 @@ const Signup = () => {
     const submitHandler = async (e) => {
         e.preventDefault();
         // console.log(input);
+        const formData = new FormData();
+        formData.append("fullname", input.fullname);
+        formData.append("email", input.email);
+        formData.append("phoneNumber", input.phoneNumber);
+        formData.append("password", input.password);
+        formData.append("role", input.role);
+        if (input.file) {
+            formData.append("file", input.file);
+        }
         try {
-            const res = await axios.post(`${USER_API_END_POINT}/register`)
+            const res = await axios.post(`${USER_API_END_POINT}/register`, formData,{
+                headers:{
+                    "Content-Type":"multipart/form-data"
+                },
+                withCredentials:true,
+            });
+            if(res.data.success){
+                navigate("/login");
+                toast.success(res.data.message);
+            }
         } catch (error) {
-            
+            console.log(error);
+            toast.error(error.response.data.message);
         }
     }
 
@@ -53,45 +75,45 @@ const Signup = () => {
                     {/* Full Name */}
                     <div className='my-2'>
                         <Label htmlFor="name" className='mb-1 block'>Full Name</Label>
-                        <Input 
-                        type="text" 
-                        value={input.fullname}
-                        name="fullname"
-                        onChange={changeEventHandler}
-                        placeholder="Vivek" />
+                        <Input
+                            type="text"
+                            value={input.fullname}
+                            name="fullname"
+                            onChange={changeEventHandler}
+                            placeholder="Vivek" />
                     </div>
 
                     {/* Email */}
                     <div className='my-2'>
                         <Label htmlFor="email" className='mb-1 block'>Email</Label>
-                        <Input 
-                        type="email" 
-                        value={input.email}
-                        name="email"
-                        onChange={changeEventHandler}
-                        placeholder="vivek@gmail.com" />
+                        <Input
+                            type="email"
+                            value={input.email}
+                            name="email"
+                            onChange={changeEventHandler}
+                            placeholder="vivek@gmail.com" />
                     </div>
 
                     {/* Phone */}
                     <div className='my-2'>
                         <Label htmlFor="phone" className='mb-1 block'>Phone Number</Label>
-                        <Input 
-                        type="tel" 
-                        value={input.phoneNumber}
-                        name="phoneNumber"
-                        onChange={changeEventHandler}
-                        placeholder="+91 9876543210" />
+                        <Input
+                            type="tel"
+                            value={input.phoneNumber}
+                            name="phoneNumber"
+                            onChange={changeEventHandler}
+                            placeholder="+91 9876543210" />
                     </div>
 
                     {/* Password */}
                     <div className='my-2'>
                         <Label htmlFor="password" className='mb-1'>Password</Label>
-                        <Input 
-                        type="password" 
-                        value={input.password}
-                        name="password"
-                        onChange={changeEventHandler}
-                        placeholder="********" />
+                        <Input
+                            type="password"
+                            value={input.password}
+                            name="password"
+                            onChange={changeEventHandler}
+                            placeholder="********" />
                     </div>
 
                     {/* Role and Profile side by side */}
@@ -100,11 +122,11 @@ const Signup = () => {
                         {/* Profile Image Upload */}
                         <div className="sm:w-1/2">
                             <Label htmlFor="profile" className="block mb-1">Profile Image</Label>
-                            <Input 
-                            type="file" 
-                            accept="image/*" 
-                            onChange={changeFileHandler}
-                            className="cursor-pointer" />
+                            <Input
+                                type="file"
+                                accept="image/*"
+                                onChange={changeFileHandler}
+                                className="cursor-pointer" />
                         </div>
 
                         {/* Role */}
@@ -112,23 +134,23 @@ const Signup = () => {
                             <Label htmlFor="role" className="block mb-2">Select Role</Label>
                             <RadioGroup defaultValue="student" className="flex gap-6">
                                 <div className="flex items-center space-x-2">
-                                    <Input 
-                                    type="radio" 
-                                    name="role" 
-                                    value="student"
-                                    checked={input.role === 'student'} 
-                                    onChange={changeEventHandler}
-                                    className="cursor-pointer" />
+                                    <Input
+                                        type="radio"
+                                        name="role"
+                                        value="student"
+                                        checked={input.role === 'student'}
+                                        onChange={changeEventHandler}
+                                        className="cursor-pointer" />
                                     <Label htmlFor="student">Student</Label>
                                 </div>
                                 <div className="flex items-center space-x-2">
-                                    <Input 
-                                    type="radio" 
-                                    name="role" 
-                                    value="recruiter" 
-                                    checked={input.role === 'recruiter'}
-                                    onChange={changeEventHandler}
-                                    className="cursor-pointer" />
+                                    <Input
+                                        type="radio"
+                                        name="role"
+                                        value="recruiter"
+                                        checked={input.role === 'recruiter'}
+                                        onChange={changeEventHandler}
+                                        className="cursor-pointer" />
                                     <Label htmlFor="recruiter">Recruiter</Label>
                                 </div>
                             </RadioGroup>
