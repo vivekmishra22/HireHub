@@ -5,45 +5,57 @@ import { Input } from "@/components/ui/input"
 import { RadioGroup } from "@/components/ui/radio-group"
 import { Button } from '../button'
 import { Link, useNavigate } from 'react-router-dom'
+import { USER_API_END_POINT } from '@/utils/constant'
+import axios from 'axios'
+import { toast } from 'sonner'
+import { useDispatch, useSelector } from 'react-redux'
+import { setLoading } from '@/redux/authSlice'
+import store from '@/redux/store'
+import { Loader2 } from 'lucide-react'
 
 const Login = () => {
 
   const [input, setInput] = useState({
-          email: "",
-          password: "",
-          role: ""
+    email: "",
+    password: "",
+    role: ""
+  });
+
+  const { loading } = useSelector(store => store.auth);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const changeEventHandler = (e) => {
+    setInput({ ...input, [e.target.name]: e.target.value });
+  };
+
+  // const submitHandler = async (e) => {
+  //     e.preventDefault();
+  //     console.log(input);
+  // };
+
+  const submitHandler = async (e) => {
+    e.preventDefault();
+
+    try {
+      dispatch(setLoading(true));
+      const res = await axios.post(`${USER_API_END_POINT}/login`, input, {
+        headers: {
+          "Content-Type": "application/json"
+        },
+        withCredentials: true,
       });
-
-      const navigate = useNavigate();
-  
-      const changeEventHandler = (e) => {
-          setInput({ ...input, [e.target.name]: e.target.value });
-      };
-  
-      // const submitHandler = async (e) => {
-      //     e.preventDefault();
-      //     console.log(input);
-      // };
-
-      const submitHandler = async (e) => {
-        e.preventDefault();
-        
-        try {
-            const res = await axios.post(`${USER_API_END_POINT}/login`, input,{
-                headers:{
-                    "Content-Type":"application/json"
-                },
-                withCredentials:true,
-            });
-            if(res.data.success){
-                navigate("/");
-                toast.success(res.data.message);
-            }
-        } catch (error) {
-            console.log(error);
-            toast.error(error.response.data.message);
-        }
+      if (res.data.success) {
+        navigate("/");
+        toast.success(res.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response.data.message);
+    } finally {
+      dispatch(setLoading(false));
     }
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -61,23 +73,23 @@ const Login = () => {
           {/* Email */}
           <div className='my-2'>
             <Label htmlFor="email" className='mb-1 block'>Email</Label>
-            <Input 
-            type="email" 
-            value={input.email}
-            name="email"
-            onChange={changeEventHandler}
-            placeholder="vivek@gmail.com" />
+            <Input
+              type="email"
+              value={input.email}
+              name="email"
+              onChange={changeEventHandler}
+              placeholder="vivek@gmail.com" />
           </div>
 
           {/* Password */}
           <div className='my-2'>
             <Label htmlFor="password" className='mb-1'>Password</Label>
-            <Input 
-            type="password" 
-            value={input.password}
-            name="password"
-            onChange={changeEventHandler}
-            placeholder="********" />
+            <Input
+              type="password"
+              value={input.password}
+              name="password"
+              onChange={changeEventHandler}
+              placeholder="********" />
           </div>
 
           {/* Role and Profile side by side */}
@@ -88,23 +100,23 @@ const Login = () => {
               <Label htmlFor="role" className="block mb-2">Select Role</Label>
               <RadioGroup defaultValue="student" className="flex gap-6">
                 <div className="flex items-center space-x-2">
-                  <Input 
-                  type="radio" 
-                  name="role" 
-                  value="student" 
-                  checked={input.role === 'student'}
-                  onChange={changeEventHandler}
-                  className="cursor-pointer" />
+                  <Input
+                    type="radio"
+                    name="role"
+                    value="student"
+                    checked={input.role === 'student'}
+                    onChange={changeEventHandler}
+                    className="cursor-pointer" />
                   <Label htmlFor="student">Student</Label>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <Input 
-                  type="radio" 
-                  name="role" 
-                  value="recruiter"
-                  checked={input.role === 'recruiter'} 
-                  onChange={changeEventHandler}
-                  className="cursor-pointer" />
+                  <Input
+                    type="radio"
+                    name="role"
+                    value="recruiter"
+                    checked={input.role === 'recruiter'}
+                    onChange={changeEventHandler}
+                    className="cursor-pointer" />
                   <Label htmlFor="recruiter">Recruiter</Label>
                 </div>
               </RadioGroup>
@@ -112,7 +124,11 @@ const Login = () => {
 
           </div>
 
-          <Button type='submit' className='w-full my-4'>Login</Button>
+          {
+            loading ? <Button className='w-full my-4'><Loader2 className='mr-2 h-4 w-4 animate-spin' />Please wait</Button> :
+              <Button type='submit' className='w-full my-4'>Login</Button>
+          }
+
 
           <span className="text-sm text-center text-gray-600 block">
             Don't have an account ?
