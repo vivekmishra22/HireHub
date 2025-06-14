@@ -6,10 +6,15 @@ import { Button } from "@/components/ui/button"
 import { Avatar, AvatarImage } from "@/components/ui/avatar"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { LogOut, User2 } from 'lucide-react'
+import { useSelector } from 'react-redux'
+import store from '@/redux/store'
 
 const Navbar = () => {
 
-    const user = false;
+    const {user} = useSelector(store=>store.auth);
+    
+    // const user = true;
+    // const user = false;
 
     return (
         <div className='bg-white py-2'>
@@ -21,7 +26,7 @@ const Navbar = () => {
                     <ul className='flex font-medium items-center gap-5'>
                         <li><Link to='/'>Home</Link></li>
                         <li><Link to='/jobs'>Jobs</Link></li>
-                        <li>Browse</li>
+                        <li><Link to='/browse'>Browse</Link></li>
                     </ul>
 
                     {
@@ -54,7 +59,7 @@ const Navbar = () => {
                                     <div className='flex flex-col my-3 text-gray-600'>
                                         <div className='flex w-fit items-center gap-2 cursor-pointer'>
                                             <User2 />
-                                            <Button variant="link" >View Profile</Button>
+                                            <Button variant="link" ><Link to="/profile">View Profile</Link></Button>
                                         </div>
                                         <div className='flex w-fit items-center gap-2 cursor-pointer'>
                                             <LogOut />
