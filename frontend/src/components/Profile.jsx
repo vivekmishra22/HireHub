@@ -1,17 +1,19 @@
-import React from 'react'
-import Navbar from './ui/shared/Navbar'
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import React, { useState } from 'react'
+import Navbar from './shared/Navbar'
+import { Avatar, AvatarImage } from "@/components/ui/avatar"
 import { Contact, Mail, Pen } from 'lucide-react'
 import { Button } from './ui/button'
 import { Badge } from './ui/badge'
 import { Label } from './ui/label'
 import AppliedJobTable from './AppliedJobTable'
+import UpdateProfileDialog from './UpdateProfileDialog'
 
 const skills = ["HTML", "CSS", "JavaScript", "React.js"]
+const isResume = true;
 
 const Profile = () => {
 
-  const isResume = true;
+  const [open, setOpen] = useState(false);
 
   return (
     <div>
@@ -27,7 +29,7 @@ const Profile = () => {
               <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error, provident.</p>
             </div>
           </div>
-          <Button variant='outline' className='text-right'><Pen /></Button>
+          <Button onClick={ () => setOpen(true)} variant='outline' className='text-right'><Pen /></Button>
         </div>
         <div className='my-5'>
           <div className='flex items-center gap-3 my-2'>
@@ -55,10 +57,13 @@ const Profile = () => {
         </div>
       </div>
       <div className='max-w-4xl mx-auto bg-white rounded-2xl'>
-        <h1>Applied Jobs</h1>
+        <h1 className='font-bold text-lg my-5'>Applied Jobs</h1>
         {/* Applied job table */}
         <AppliedJobTable />
       </div>
+
+      <UpdateProfileDialog open={open} setOpen={setOpen} />
+      
     </div>
   )
 }

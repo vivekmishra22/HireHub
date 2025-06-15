@@ -14,11 +14,11 @@ const HeroSection = () => {
                     <span className="text-[#6A38C2]"> Dream Jobs</span>
                 </h1>
                 <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti, nam vero doloremque error dolore sequi?
+                    Discover thousands of job listings from top companies across India.
                 </p>
                 <div className="flex w-[40%] shadow-lg border border-gray-200 pl-3 rounded-full items-center gap-4 mx-auto">
                     <input type="text" 
-                    placeholder="find your dream jobs"
+                    placeholder="Find your dream jobs"
                     className="outline-none border-none w-full"
                     />
                     <Button className="rounded-r-full bg-[#6A38C2]">
