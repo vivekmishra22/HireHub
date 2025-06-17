@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Label } from './ui/label'
 import { Input } from './ui/input'
 import { Button } from './ui/button'
@@ -16,12 +16,12 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
   const { user } = useSelector(store => store.auth);
 
   const [input, setInput] = useState({
-    fullname: user?.fullname,
-    email: user?.email,
-    phoneNumber: user?.phoneNumber,
-    bio: user?.profile?.bio,
+    fullname: user?.fullname || "",
+    email: user?.email || "",
+    phoneNumber: user?.phoneNumber || "",
+    bio: user?.profile?.bio || "",
     skills: user?.profile?.skills.map(skill => skill) || "",
-    file: user?.profile?.resume
+    file: user?.profile?.resume || ""
   });
 
   const dispatch = useDispatch();
@@ -48,6 +48,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
     };
 
     try {
+      setLoading(true);
       const res = await axios.put(`${USER_API_END_POINT}/profile/update`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
@@ -61,17 +62,17 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
     } catch (error) {
       console.log(error)
       toast.error(error.response.data.message);
+    } finally {
+      setLoading(false);
     } 
 
     setOpen(false);
-
     console.log(input);
   }
 
   return (
     <div>
       <Dialog open={open}>
-        {/* <DialogTrigger>Open</DialogTrigger> */}
         <DialogContent className='sm:max-w-[425px]' onInteractOutside={() => setOpen(false)}>
           <DialogHeader>
             <DialogTitle>Update Profile</DialogTitle>
