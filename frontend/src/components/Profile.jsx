@@ -63,6 +63,7 @@ const Profile = () => {
             // isResume ? <a className='text-blue-500 w-full hover:underline cursor-pointer' href="https://youtube.com" target='_blank'>Youtube</a> : <span>NA</span>
           }
         </div>
+        
       </div>
       <div className='max-w-4xl mx-auto bg-white rounded-2xl'>
         <h1 className='font-bold text-lg my-5'>Applied Jobs</h1>
