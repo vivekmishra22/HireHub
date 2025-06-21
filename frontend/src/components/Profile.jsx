@@ -24,7 +24,8 @@ const Profile = () => {
         <div className='flex items-center justify-between'>
           <div className='flex items-center gap-4'>
             <Avatar className='h-20 w-20'>
-              <AvatarImage src="https://cdn-icons-png.flaticon.com/128/270/270781.png" alt='profile' />
+              <AvatarImage src={user?.profile?.profilePhoto} alt='profile' />
+              {/* <AvatarImage src="https://cdn-icons-png.flaticon.com/128/270/270781.png" alt='profile' /> */}
             </Avatar>
             <div>
               <h1 className='font-medium text-xl'>{user?.fullname}</h1>
