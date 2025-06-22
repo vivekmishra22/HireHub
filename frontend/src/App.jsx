@@ -38,6 +38,11 @@ const appRouter = createBrowserRouter([
     path: '/profile',
     element: <Profile />
   },
+  // Here routes for admin started
+  {
+    path:"/admin/companies",
+    element:<Companies/>
+  },
 ])
 
 function App() {
