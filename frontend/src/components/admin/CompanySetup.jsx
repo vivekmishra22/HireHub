@@ -4,6 +4,10 @@ import { Button } from '../ui/button'
 import { ArrowLeft } from 'lucide-react'
 import { Label } from '../ui/label'
 import { Input } from '../ui/input'
+import axios from 'axios'
+import { COMPANY_API_END_POINT } from '@/utils/constant'
+import { useNavigate, useParams } from 'react-router-dom'
+import { toast } from 'sonner'
 
 const CompanySetup = () => {
 
@@ -16,6 +20,8 @@ const CompanySetup = () => {
     });
 
     const [loading, setLoading] = useState(false);
+    const param = useParams();
+    const navigate = useNavigate();
 
     const changeEventHandler = (e) => {
         setInput({ ...input, [e.target.name]: e.target.value });
@@ -23,23 +29,36 @@ const CompanySetup = () => {
 
     const changeFileHandler = (e) => {
         const file = e.target.files?.[0];
-        setInput({...input, file});
+        setInput({ ...input, file });
     }
 
     const SubmitHandler = async (e) => {
         e.preventDefault();
         const formData = new FormData();
-        formData.append("name".input.name);
-        formData.append("description".input.description);
-        formData.append("website".input.website);
-        formData.append("location".input.location);
-        if(input.file){
-            formData.append("file".input.file);
+        formData.append("name",input.name);
+        formData.append("description",input.description);
+        formData.append("website",input.website);
+        formData.append("location",input.location);
+        if (input.file) {
+            formData.append("file",input.file);
         }
         try {
-            const res
+            setLoading(true);
+            const res = await axios.put(`${COMPANY_API_END_POINT}/update/${param.id}`, formData, {
+                headers: {
+                    "Content-Type": 'multipart/form-data'
+                },
+                withCredentials: true
+            });
+            if (res.data.success) {
+                toast.success(res.data.message);
+                navigate('/admin/companies');
+            }
         } catch (error) {
-            console.log(error)
+            console.log(error);
+            toast.error(error.response.data.message);
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -49,7 +68,7 @@ const CompanySetup = () => {
             <div className='max-w-xl mx-auto my-10'>
                 <form action="" onSubmit={SubmitHandler}>
                     <div className='flex items-center gap-5 p-8'>
-                        <Button variant='outline' className={'flex items-center gap-2 text-gray-500 font-semibold'}>
+                        <Button onClick={()=> navigate('/admin/companies')} variant='outline' className={'flex items-center gap-2 text-gray-500 font-semibold'}>
                             <ArrowLeft />
                             <span>Back</span>
                         </Button>
@@ -77,7 +96,10 @@ const CompanySetup = () => {
                             <Input type='file' accept="image/*" onChange={changeFileHandler} />
                         </div>
                     </div>
-                    <Button type='submit' className={'w-full mt-8'}>Update</Button>
+                    {
+                        loading ? <Button className='w-full my-4'><Loader2 className='mr-2 h-4 w-4 animate-spin' />Please wait</Button> :
+                            <Button type='submit' className='w-full my-4'>Update</Button>
+                    }
                 </form>
             </div>
         </div>
