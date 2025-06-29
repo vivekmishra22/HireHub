@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Navbar from '../shared/Navbar'
 import { Button } from '../ui/button'
 import { ArrowLeft } from 'lucide-react'
@@ -35,12 +35,12 @@ const CompanySetup = () => {
     const SubmitHandler = async (e) => {
         e.preventDefault();
         const formData = new FormData();
-        formData.append("name",input.name);
-        formData.append("description",input.description);
-        formData.append("website",input.website);
-        formData.append("location",input.location);
+        formData.append("name", input.name);
+        formData.append("description", input.description);
+        formData.append("website", input.website);
+        formData.append("location", input.location);
         if (input.file) {
-            formData.append("file",input.file);
+            formData.append("file", input.file);
         }
         try {
             setLoading(true);
@@ -62,13 +62,23 @@ const CompanySetup = () => {
         }
     }
 
+    useEffect(() => {
+        setInput({
+            name: "",
+            description: "",
+            website: "",
+            location: "",
+            file: null
+        })
+    })
+
     return (
         <div>
             <Navbar />
             <div className='max-w-xl mx-auto my-10'>
                 <form action="" onSubmit={SubmitHandler}>
                     <div className='flex items-center gap-5 p-8'>
-                        <Button onClick={()=> navigate('/admin/companies')} variant='outline' className={'flex items-center gap-2 text-gray-500 font-semibold'}>
+                        <Button onClick={() => navigate('/admin/companies')} variant='outline' className={'flex items-center gap-2 text-gray-500 font-semibold'}>
                             <ArrowLeft />
                             <span>Back</span>
                         </Button>
