@@ -15,8 +15,9 @@ const CompaniesTable = () => {
             if (!searchCompanyByText) {
                 return true
             };
-            return company?.toLowerCase().includes(searchCompanyByText.toLowerCase())
-        })
+            return company?.name.toLowerCase().includes(searchCompanyByText.toLowerCase());
+        });
+        setFilterCompany(filteredCompany);
     }, [companies, searchCompanyByText])
 
     return (
@@ -36,7 +37,8 @@ const CompaniesTable = () => {
                         companies.length <= 0 ? <span>You haven't registered any company yet.</span> : (
                             <>
                                 {
-                                    companies?.map((company) => (
+                                    filterCompany?.map((company) => (
+                                    // companies?.map((company) => (
                                         <tr>
                                             <TableCell>
                                                 <Avatar>
