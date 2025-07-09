@@ -28,7 +28,7 @@ const AdminJobs = () => {
 
         <div className='flex items-center justify-between my-5'>
           <Input className={'w-fit'} placeholder='Filter by name, role' onChange={(e) => setInput(e.target.value)} />
-          <Button onClick={() => navigate("/admin/companies/create")}>Add Job</Button>
+          <Button onClick={() => navigate("/admin/jobs/create")}>Add Job</Button>
         </div>
 
         <AdminJobsTable />
