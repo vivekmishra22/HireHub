@@ -30,7 +30,8 @@ const Job = ({job}) => {
             <div className="flex items-center gap-2 my-2">
                 <Button variant={"outline"} className={"p-6"} size={"icon"}>
                     <Avatar>
-                        <AvatarImage src="https://cdn-icons-png.flaticon.com/128/270/270781.png" />
+                        <AvatarImage src={job?.company?.logo} />
+                        {/* <AvatarImage src="https://cdn-icons-png.flaticon.com/128/270/270781.png" /> */}
                         {/* <AvatarImage src="https://cdn-icons-png.flaticon.com/128/15189/15189159.png" /> */}
                     </Avatar>
                 </Button>
