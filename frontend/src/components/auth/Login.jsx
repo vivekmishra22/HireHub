@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { RadioGroup } from "@/components/ui/radio-group"
@@ -9,7 +9,6 @@ import axios from 'axios'
 import { toast } from 'sonner'
 import { useDispatch, useSelector } from 'react-redux'
 import { setLoading, setUser } from '@/redux/authSlice'
-import store from '@/redux/store'
 import { Loader2 } from 'lucide-react'
 import Navbar from '../shared/Navbar'
 
@@ -21,7 +20,7 @@ const Login = () => {
     role: ""
   });
 
-  const { loading } = useSelector(store => store.auth);
+  const { loading, user } = useSelector(store => store.auth);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -57,6 +56,12 @@ const Login = () => {
       dispatch(setLoading(false));
     }
   }
+
+  useEffect(() => {
+    if(user){
+      navigate("/");
+    }
+  },[]);
 
   return (
     <div className="min-h-screen bg-gray-50">
