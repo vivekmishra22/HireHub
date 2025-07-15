@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
 
-const protectedRoute = ({children}) => {
+const ProtectedRoute = ({children}) => {
     const {user} = useSelector(store => store.auth);
 
     const navigate = useNavigate();
@@ -20,4 +20,4 @@ const protectedRoute = ({children}) => {
   )
 }
 
-export default protectedRoute
+export default ProtectedRoute
