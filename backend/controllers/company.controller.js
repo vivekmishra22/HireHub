@@ -1,17 +1,18 @@
-import { Company } from "../models/company.model.js"
-import getDataUri from "../utils/datauri.js";
-import cloudinary from "../utils/cloudinary.js";
+import { Company } from "../models/company.model.js"    // Importing required modules and utilities
+import getDataUri from "../utils/datauri.js";       // Converts uploaded file to Data URI format
+import cloudinary from "../utils/cloudinary.js";    // Cloudinary config for image upload
 
-export const registerCompany = async (req, res) => {
+export const registerCompany = async (req, res) => {    // Register a new company
     try {
         const { companyName } = req.body;
-        if (!companyName) {
+        if (!companyName) {     // Validate input
             return res.status(400).json({
                 message: "Company name is required.",
                 success: false
             });
         };
 
+        // Check if company already exists
         let company = await Company.findOne({ name: companyName });
         if (company) {
             return res.status(400).json({
@@ -20,9 +21,9 @@ export const registerCompany = async (req, res) => {
             });
         };
 
-        company = await Company.create({
+        company = await Company.create({    // Create new company
             name: companyName,
-            userId: req.id
+            userId: req.id      // Logged in user (admin) who is registering the company
         });
 
         return res.status(201).json({
@@ -35,9 +36,10 @@ export const registerCompany = async (req, res) => {
     }
 }
 
+// Get all companies registered by a specific admin user
 export const getCompany = async (req, res) => {
     try {
-        const userId = req.id;  // logges in user id
+        const userId = req.id;  // logges in user id, Logged in user ID (admin)
         const companies = await Company.find({ userId });
 
         if (!companies) {
@@ -57,9 +59,10 @@ export const getCompany = async (req, res) => {
     }
 }
 
+// Get a company by its ID
 export const getCompanyById = async (req, res) => {
     try {
-        const companyId = req.params.id;
+        const companyId = req.params.id;        // Extract company ID from route
 
         const company = await Company.findById(companyId);
         if (!company) {
@@ -78,19 +81,20 @@ export const getCompanyById = async (req, res) => {
     }
 }
 
+// Update company details including logo upload to Cloudinary
 export const updateCompany = async (req, res) => {
     try {
         const { name, description, website, location } = req.body;
-        const file = req.file;
+        const file = req.file;      // Multer will give uploaded file
 
-        // Here cloudinary code
+        // Here cloudinary code, Convert file to base64 data URI format
         const fileUri = getDataUri(file);
-        const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
+        const cloudResponse = await cloudinary.uploader.upload(fileUri.content);    // Upload to Cloudinary and get secure image URL
         const logo = cloudResponse.secure_url;
 
-        const updateDate = { name, description, website, location, logo };
+        const updateDate = { name, description, website, location, logo };  // Prepare data to update
 
-        const company = await Company.findByIdAndUpdate(req.params.id, updateDate, { new: true });
+        const company = await Company.findByIdAndUpdate(req.params.id, updateDate, { new: true });  // Update company by ID
         if (!company) {
             return res.status(404).json({
                 message: "Company not found",
