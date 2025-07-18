@@ -1,40 +1,37 @@
-import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import authSlice from "./authSlice";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";     // Import core Redux Toolkit functions
+
+// Import individual slice reducers
+import authSlice from "./authSlice";        
 import jobSlice from "./jobSlice";
 import companySlice from "./companySlice";
 import applicationSlice from "./applicationSlice";
 
-import {
-    persistReducer,
-    FLUSH,
-    REHYDRATE,
-    PAUSE,
-    PERSIST,
-    PURGE,
-    REGISTER,
+import {        // Import persistence utilities from redux-persist
+    persistReducer,     // To wrap the rootReducer for persistence
+    FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER   // Constants for serializableCheck middleware
 } from 'redux-persist'
-import storage from 'redux-persist/lib/storage'
+import storage from 'redux-persist/lib/storage'     // Uses localStorage for persistence
 
 const persistConfig = {
-    key: 'root',
-    version: 1,
-    storage,
+    key: 'root',        // The key under which the root reducer state will be stored in localStorage
+    version: 1,         // Versioning your persisted data (useful for migrations)
+    storage,            // Specifies the storage engine (localStorage here)
 }
 
-const rootReducer = combineReducers({
-    auth: authSlice,
-    job: jobSlice,
-    company: companySlice,
-    application:applicationSlice
+const rootReducer = combineReducers({       // Combine All Reducers
+    auth: authSlice,        // Stores authentication-related state
+    job: jobSlice,          // Stores job-related state
+    company: companySlice,  // Stores company-related state
+    application:applicationSlice    // Stores job application-related state
 })
 
-const persistedReducer = persistReducer(persistConfig, rootReducer)
+const persistedReducer = persistReducer(persistConfig, rootReducer);    // Wrap Reducer with Persistence
 
-const store = configureStore({
-    reducer: persistedReducer,
+const store = configureStore({      // 🛠 Configure Redux Store
+    reducer: persistedReducer,      // Using persisted version of root reducer
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
-            serializableCheck: {
+            serializableCheck: {    // Ignore these specific redux-persist actions to avoid warnings
                 ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
             },
         }),
@@ -47,4 +44,4 @@ const store = configureStore({
 //     }
 // });
 
-export default store;
+export default store;       // 📤 Export Store
