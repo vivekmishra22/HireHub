@@ -1,24 +1,26 @@
-import React, { useEffect, useState } from 'react'
-import Navbar from '../shared/Navbar'
+import React, { useEffect, useState } from 'react'            // Import necessary React hooks and components
+import Navbar from '../shared/Navbar'                         // Navbar component used at the top
+
+// UI components for input and button
 import { Input } from '../ui/input'
 import { Button } from '../ui/button'
-import { useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
-import AdminJobsTable from './AdminJobsTable'
-import useGetAllAdminJobs from '@/hooks/useGetAllAdminJobs'
-import { setSearchJobByText } from '@/redux/jobSlice'
 
-const AdminJobs = () => {
+import { useNavigate } from 'react-router-dom'              // Hook to navigate between routes
+import { useDispatch } from 'react-redux'                   // Redux hook to dispatch actions
+import AdminJobsTable from './AdminJobsTable'               // Component to display all jobs in a table format
+import useGetAllAdminJobs from '@/hooks/useGetAllAdminJobs' // Custom hook to fetch all jobs created by admin
+import { setSearchJobByText } from '@/redux/jobSlice'       // Redux action to update search filter in global state
 
-  useGetAllAdminJobs();
+const AdminJobs = () => {         // Functional component definition
 
-  const [input, setInput] = useState("");
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+  useGetAllAdminJobs();           // Call custom hook to fetch all admin jobs on component mount
 
-  useEffect(() => {
-    dispatch(setSearchJobByText(input));
-    // dispatch(setSearchCompanyByText(input));
+  const [input, setInput] = useState("");   // Local state to store search input value
+  const navigate = useNavigate();           // Hook to programmatically navigate to other routes
+  const dispatch = useDispatch();           // Hook to dispatch Redux actions
+
+  useEffect(() => {           // Whenever `input` value changes, update Redux state to filter jobs by text
+    dispatch(setSearchJobByText(input));  // Updates the job search text in Redux state
   }, [input]);
 
   return (
@@ -38,4 +40,4 @@ const AdminJobs = () => {
   )
 }
 
-export default AdminJobs
+export default AdminJobs;     // Export the component for use in other files
