@@ -1,28 +1,28 @@
-import React, { useEffect, useState } from 'react'
-import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '../ui/table'
-import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
-import { Edit2, Eye, MoreHorizontal } from 'lucide-react'
-import { useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'  // Import necessary hooks and components, React + hooks
+import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '../ui/table'       // Custom Table UI components
+import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'     // Popover for dropdown actions
+import { Edit2, Eye, MoreHorizontal } from 'lucide-react'                   // Icons from Lucide
+import { useSelector } from 'react-redux'                                   // Hook to access Redux state
+import { useNavigate } from 'react-router-dom'                              // Hook for page navigation
 
 const AdminJobsTable = () => {
 
     // const { companies, searchCompanyByText } = useSelector(store => store.company);
-    const { allAdminJobs, searchJobByText } = useSelector(store => store.job);
-    const [filterJobs, setFilterJobs] = useState(allAdminJobs);
+    const { allAdminJobs, searchJobByText } = useSelector(store => store.job);      // Access job-related data from Redux store
+    const [filterJobs, setFilterJobs] = useState(allAdminJobs);                     // Local state to manage filtered jobs
 
-    const navigate = useNavigate();
+    const navigate = useNavigate();         // Hook to navigate programmatically
 
-    useEffect(() => {
-        const filteredJobs = allAdminJobs.length >= 0 && allAdminJobs.filter((job) => {
+    useEffect(() => {               // Run when job list or search text changes
+        const filteredJobs = allAdminJobs.length >= 0 && allAdminJobs.filter((job) => { // Filter jobs based on title or company name using the search text
             if (!searchJobByText) {
-                return true
+                return true             // If no search input, return all jobs
             };
-            return job?.title.toLowerCase().includes(searchJobByText.toLowerCase()) ||
-                    job?.company?.name.toLowerCase().includes(searchJobByText.toLowerCase());
+            return job?.title.toLowerCase().includes(searchJobByText.toLowerCase()) ||          // Match title
+                    job?.company?.name.toLowerCase().includes(searchJobByText.toLowerCase());   // Match Company Name
         });
-        setFilterJobs(filteredJobs);
-    }, [allAdminJobs, searchJobByText])
+        setFilterJobs(filteredJobs);            // Update local filtered job lis
+    }, [allAdminJobs, searchJobByText])         // Dependency array
 
     return (
         <div>
@@ -38,9 +38,10 @@ const AdminJobsTable = () => {
                 </TableHeader>
                 <TableBody>
                     {
+                        // Loop through each job and display in table row
                         filterJobs?.map((job) => (
                             // companies?.map((company) => (
-                            <tr>
+                            <tr key={job._id}>        {/* Add key for performance */}
                                 <TableCell>{job?.company?.name}</TableCell>
                                 <TableCell>{job?.title}</TableCell>
                                 <TableCell>{job?.createdAt.split("T")[0]}</TableCell>
@@ -71,4 +72,4 @@ const AdminJobsTable = () => {
     )
 }
 
-export default AdminJobsTable
+export default AdminJobsTable;      // Export component
