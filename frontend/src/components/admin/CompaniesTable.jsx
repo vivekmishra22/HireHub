@@ -41,6 +41,7 @@ const CompaniesTable = () => {
                         companies.length <= 0 ? <span>You haven't registered any company yet.</span> : (
                             <>
                                 {
+                                    // Mapping through filtered company list
                                     filterCompany?.map((company) => (
                                     // companies?.map((company) => (
                                         <tr>
@@ -51,7 +52,7 @@ const CompaniesTable = () => {
                                                 </Avatar>
                                             </TableCell>
                                             <TableCell>{company.name}</TableCell>
-                                            <TableCell>{company.createdAt.split("T")[0]}</TableCell>
+                                            <TableCell>{company.createdAt.split("T")[0]}</TableCell>   // {/* Created date (YYYY-MM-DD) extracted from full timestamp */}
                                             <TableCell className={'text-right cursor-pointer'}>
                                                 <Popover>
                                                     <PopoverTrigger>
@@ -79,4 +80,4 @@ const CompaniesTable = () => {
     )
 }
 
-export default CompaniesTable
+export default CompaniesTable;          // Exporting the component to be used in other files
