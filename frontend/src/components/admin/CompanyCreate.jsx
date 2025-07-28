@@ -1,37 +1,39 @@
-import React, { useState } from 'react'
-import Navbar from '../shared/Navbar'
-import { Label } from '../ui/label'
-import { Input } from '../ui/input'
-import { Button } from '../ui/button'
-import { useNavigate } from 'react-router-dom'
-import axios from 'axios'
-import { COMPANY_API_END_POINT } from '@/utils/constant'
-import { toast } from 'sonner'
-import { useDispatch } from 'react-redux'
-import { setSingleCompany } from '@/redux/companySlice'
+import React, { useState } from 'react'                     // useState is for managing local state
+import Navbar from '../shared/Navbar'                       // Custom Navbar component
+import { Label } from '../ui/label'                         // Label component for form inputs
+import { Input } from '../ui/input'                         // Input field component
+import { Button } from '../ui/button'                       // Styled button component
+import { useNavigate } from 'react-router-dom'              // Hook to navigate programmatically
+import axios from 'axios'                                   // HTTP client for API calls
+import { COMPANY_API_END_POINT } from '@/utils/constant'    // API endpoint constant
+import { toast } from 'sonner'                              // Library for showing toast notifications
+import { useDispatch } from 'react-redux'                   // Redux hook to dispatch actions
+import { setSingleCompany } from '@/redux/companySlice'     // Redux action to store single company
 
-const CompanyCreate = () => {
+const CompanyCreate = () => {                           // Component definition
 
-    const navigate = useNavigate();
-    const [companyName, setCompanyName] = useState();
-    const dispatch = useDispatch();
+    const navigate = useNavigate();                     // Hook to redirect user
+    const [companyName, setCompanyName] = useState();   // State to hold input value for company name
+    const dispatch = useDispatch();                     // Get Redux dispatch function
 
-    const registerNewCompany = async () => {
+    const registerNewCompany = async () => {            // Function to register a new company
         try {
-            const res = await axios.post(`${COMPANY_API_END_POINT}/register`, {companyName}, {
+            const res = await axios.post(`${COMPANY_API_END_POINT}/register`,   // Make POST request to backend with company name
+                {companyName},                                                  // Sending company name in body
+                {  
                 headers:{
-                    'Content-Length':'application/json'
+                    'Content-Length':'application/json'                         // Incorrect header value; should be Content-Type
                 },
-                withCredentials:true
+                withCredentials:true                                            // Include cookies (for auth/session)
             });
-            if(res?.data?.success){
-                dispatch(setSingleCompany(res.data.company));
-                toast.success(res.data.message);
-                const companyId = res?.data?.company?._id;
-                navigate(`/admin/companies/${companyId}`);
+            if(res?.data?.success){                                             // If registration is successful
+                dispatch(setSingleCompany(res.data.company));                   // Store the new company in Redux
+                toast.success(res.data.message);                                // Show success notification
+                const companyId = res?.data?.company?._id;                      // Extract new company ID
+                navigate(`/admin/companies/${companyId}`);                      // Redirect to company details page
             }
         } catch (error) {
-            console.log(error);
+            console.log(error);                         // Log error if API call fails
         }
     }
     
@@ -55,4 +57,4 @@ const CompanyCreate = () => {
     )
 }
 
-export default CompanyCreate
+export default CompanyCreate;                           // Exporting the component for use in other parts of the app
