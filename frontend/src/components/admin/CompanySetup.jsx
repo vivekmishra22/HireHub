@@ -1,83 +1,83 @@
-import React, { useEffect, useState } from 'react'
-import Navbar from '../shared/Navbar'
-import { Button } from '../ui/button'
-import { ArrowLeft, Loader2 } from 'lucide-react'
-import { Label } from '../ui/label'
-import { Input } from '../ui/input'
-import axios from 'axios'
-import { COMPANY_API_END_POINT } from '@/utils/constant'
-import { useNavigate, useParams } from 'react-router-dom'
-import { toast } from 'sonner'
-import { useSelector } from 'react-redux'
-import useGetCompanyById from '@/hooks/useGetCompanyById'
+import React, { useEffect, useState } from 'react'          // Import necessary libraries and components
+import Navbar from '../shared/Navbar'                       // Shared Navbar component
+import { Button } from '../ui/button'                       // Shared Navbar component
+import { ArrowLeft, Loader2 } from 'lucide-react'           // Icons for UI
+import { Label } from '../ui/label'                         // Label for form inputs
+import { Input } from '../ui/input'                         // Styled input component
+import axios from 'axios'                                   // Axios for HTTP requests
+import { COMPANY_API_END_POINT } from '@/utils/constant'    // API constant
+import { useNavigate, useParams } from 'react-router-dom'   // React Router hooks
+import { toast } from 'sonner'                              // Toast notifications
+import { useSelector } from 'react-redux'                   // Access redux store
+import useGetCompanyById from '@/hooks/useGetCompanyById'   // Custom hook to fetch single company
 
-const CompanySetup = () => {
+const CompanySetup = () => {                    // Component Start
 
-    const params = useParams();
-    useGetCompanyById(params.id);
+    const params = useParams();                 // Get route parameters (e.g., company ID from URL)
+    useGetCompanyById(params.id);               // Fetch company data by ID
 
-    const [input, setInput] = useState({
+    const [input, setInput] = useState({        
         name: "",
         description: "",
         website: "",
         location: "",
-        file: null
+        file: null                              // Holds the logo image file
     });
 
-    const {singleCompany} = useSelector(store=>store.company);
-    const [loading, setLoading] = useState(false);
-    const navigate = useNavigate();
+    const {singleCompany} = useSelector(store=>store.company);      // Get single company from Redux
+    const [loading, setLoading] = useState(false);                  // Track loading state
+    const navigate = useNavigate();                                 // Navigate programmatically
 
-    const changeEventHandler = (e) => {
+    const changeEventHandler = (e) => {                             //  Input Change Handlers, For text inputs
         setInput({ ...input, [e.target.name]: e.target.value });
     }
 
-    const changeFileHandler = (e) => {
-        const file = e.target.files?.[0];
+    const changeFileHandler = (e) => {          // For file input
+        const file = e.target.files?.[0];       // Get first selected file
         setInput({ ...input, file });
     }
 
-    const SubmitHandler = async (e) => {
+    const SubmitHandler = async (e) => {        // Submit Handler
         e.preventDefault();
-        const formData = new FormData();
+        const formData = new FormData();        // Create form data for file upload
         formData.append("name", input.name);
         formData.append("description", input.description);
         formData.append("website", input.website);
         formData.append("location", input.location);
         if (input.file) {
-            formData.append("file", input.file);
+            formData.append("file", input.file); // Append file only if present
         }
         try {
-            setLoading(true);
-            const res = await axios.put(`${COMPANY_API_END_POINT}/update/${param.id}`, formData, {
+            setLoading(true);       // Show loader
+            const res = await axios.put(`${COMPANY_API_END_POINT}/update/${param.id}`, formData, {      // API call to update company details
                 headers: {
-                    "Content-Type": 'multipart/form-data'
+                    "Content-Type": 'multipart/form-data'       // Important for file upload
                 },
-                withCredentials: true
+                withCredentials: true                           // Include credentials (cookies)
             });
             if (res.data.success) {
-                toast.success(res.data.message);
-                navigate('/admin/companies');
+                toast.success(res.data.message);                // Show success toast
+                navigate('/admin/companies');                   // Redirect after update
             }
         } catch (error) {
             console.log(error);
-            toast.error(error.response.data.message);
+            toast.error(error.response.data.message);           // Show error toast
         } finally {
-            setLoading(false);
+            setLoading(false);                                  // Hide loader
         }
     }
 
-    useEffect(() => {
+    useEffect(() => {                                       //  Set Initial Form Values After Data Fetch
         setInput({
             name: singleCompany.name || "",
             description: singleCompany.description || "",
             website: singleCompany.website || "",
             location: singleCompany.location || "",
-            file: singleCompany.file || null
+            file: singleCompany.file || null                // Reset file to null on mount
         })
     }, [singleCompany]);
 
-    return (
+    return (                                                //  JSX Markup (Render)
         <div>
             <Navbar />
             <div className='max-w-xl mx-auto my-10'>
