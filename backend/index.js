@@ -17,12 +17,15 @@ import jobRoute from "./routes/job.route.js"
 // ✅ Imports job-related API routes
 import applicationRoute from "./routes/application.route.js"
 // ✅ Imports job application-related API routes
+import path from 'path'
 
 dotenv.config({});
 // ✅ Loads `.env` variables so you can use `process.env.KEY_NAME` anywhere in your code
 
 const app = express();
 // ✅ Creates an instance of the Express application
+
+const _dirname = path.resolve();
 
 // app.get("/home", (req, res) => {
 //     return res.status(200).json({
@@ -54,6 +57,12 @@ app.use("/api/v1/user", userRoute); // ✅ All user-related endpoints will now s
 app.use("/api/v1/company", companyRoute);   // ✅ All company-related endpoints will start with `/api/v1/company`
 app.use("/api/v1/job", jobRoute);   // ✅ All job-related endpoints will start with `/api/v1/job`
 app.use("/api/v1/application", applicationRoute);   // ✅ All application-related endpoints will start with `/api/v1/application`
+
+app.use(express.static(path.join(_dirname, "/frontend/dist")));
+// app.get('*', (req, res) => {
+app.get('*', (_, res) => {
+    res.sendFile(path.resolve(_dirname, "frontend", "dist", "index.html"));
+})
 
 app.listen(PORT, () => {
     connectDB();    // ✅ Establish MongoDB connection when the server starts
