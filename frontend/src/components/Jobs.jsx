@@ -1,30 +1,27 @@
 import React, { useEffect, useState } from 'react'
 import Navbar from './shared/Navbar'
-import FilterCard from './FilterCard'
-import Job from './Job'
-import { useSelector } from 'react-redux';
+import FilterCard from './FilterCard'         // Sidebar filter component
+import Job from './Job'                       // Hook to access Redux store state
+import { useSelector } from 'react-redux';    // Animation library for smooth component transitions
 import { motion } from 'framer-motion';
-
-// const jobsArray = [1, 2, 3, 4, 5, 6, 7, 8];
 
 const Jobs = () => {
 
-  const { allJobs, searchedQuery } = useSelector(store => store.job);
-  const [filterJobs, setFilterJobs] = useState(allJobs);
+  const { allJobs, searchedQuery } = useSelector(store => store.job);   // Get all jobs and the search query from Redux store (job slice)
+  const [filterJobs, setFilterJobs] = useState(allJobs);                // Local state to store filtered jobs
 
-  useEffect(() => {
-    if (searchedQuery) {
+  useEffect(() => {           // useEffect will run whenever allJobs or searchedQuery changes
+    if (searchedQuery) {      // If there's a search query, filter jobs based on title, description, or location
       const filteredJobs = allJobs.filter((job) => {
         return job.title.toLowerCase().includes(searchedQuery.toLowerCase()) ||
           job.description.toLowerCase().includes(searchedQuery.toLowerCase()) ||
           job.location.toLowerCase().includes(searchedQuery.toLowerCase())
-        //  job.salary.toLowerCase().includes(searchedQuery.toLowerCase()) 
       });
-      setFilterJobs(filteredJobs);
+      setFilterJobs(filteredJobs);    // Update local state with filtered results
     } else {
-      setFilterJobs(allJobs);
+      setFilterJobs(allJobs);         // If no query, show all jobs
     }
-  }, [allJobs, searchedQuery]);
+  }, [allJobs, searchedQuery]);       // Dependency array ensures this runs on change
 
   return (
     <div>

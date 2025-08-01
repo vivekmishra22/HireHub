@@ -3,52 +3,52 @@ import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "
 import { Label } from './ui/label'
 import { Input } from './ui/input'
 import { Button } from './ui/button'
-import { Loader2 } from 'lucide-react'
-import { useDispatch, useSelector } from 'react-redux'
+import { Loader2 } from 'lucide-react'                  // Import loader icon for loading state
+import { useDispatch, useSelector } from 'react-redux'  // Import hooks for accessing Redux store and dispatching actions
 import axios from 'axios'
 import { USER_API_END_POINT } from '@/utils/constant'
 import { toast } from 'sonner'
-import { setUser } from '@/redux/authSlice'
+import { setUser } from '@/redux/authSlice'             // Redux action to update user data in the store
 
 const UpdateProfileDialog = ({ open, setOpen }) => {
 
-  const [loading, setLoading] = useState(false);
-  const { user } = useSelector(store => store.auth);
+  const [loading, setLoading] = useState(false);        // State to manage loading spinner during API call
+  const { user } = useSelector(store => store.auth);    // Access current user info from Redux
 
-  const [input, setInput] = useState({
+  const [input, setInput] = useState({      // Local state for form input fields, prefilled with current user data
     fullname: user?.fullname || "",
     email: user?.email || "",
     phoneNumber: user?.phoneNumber || "",
     bio: user?.profile?.bio || "",
-    skills: user?.profile?.skills.map(skill => skill) || "",
-    file: user?.profile?.resume || ""
+    skills: user?.profile?.skills.map(skill => skill) || "",  // Convert array to string for input
+    file: user?.profile?.resume || ""                         // File input will later be overwritten with File object
   });
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch();       // Redux dispatch function
 
-  const changeEventHandler = (e) => {
+  const changeEventHandler = (e) => {   // Handles text input changes for all fields
     setInput({ ...input, [e.target.name]: e.target.value });
   }
 
-  const fileChangeHandler = (e) => {
+  const fileChangeHandler = (e) => {    // Handles file input change specifically for the resume upload
     const file = e.target.files?.[0];
-    setInput({ ...input, file })
+    setInput({ ...input, file })        // Store File object in state
   }
 
-  const submitHandler = async (e) => {
+  const submitHandler = async (e) => {    // Submit handler for updating the profile
     e.preventDefault();
-    const formData = new FormData();
+    const formData = new FormData();      // Prepare FormData object for multipart/form-data submission
     formData.append("fullname", input.fullname);
     formData.append("email", input.email);
     formData.append("phoneNumber", input.phoneNumber);
     formData.append("bio", input.bio);
     formData.append("skills", input.skills);
-    if (input.file) {
+    if (input.file) {                     // Only append file if it's a new file
       formData.append("file", input.file);
     };
 
     try {
-      setLoading(true);
+      setLoading(true);                   // Show loading spinner
       const res = await axios.put(`${USER_API_END_POINT}/profile/update`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'

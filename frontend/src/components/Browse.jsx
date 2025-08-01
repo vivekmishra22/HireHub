@@ -1,24 +1,24 @@
 import React, { useEffect } from 'react'
 import Navbar from './shared/Navbar'
-import Job from './Job'
-import { useDispatch, useSelector } from 'react-redux'
-import { setSearchedQuery } from '@/redux/jobSlice'
-import useGetAllJobs from '@/hooks/useGetAllJobs'
+import Job from './Job'                                     // Job card component for displaying individual job info
+import { useDispatch, useSelector } from 'react-redux'      // Hooks for interacting with Redux store
+import { setSearchedQuery } from '@/redux/jobSlice'         // Action to reset search query
+import useGetAllJobs from '@/hooks/useGetAllJobs'           // Custom hook to fetch all jobs from backend
 
 // const randomjobs = [1, 2, 3, 4, 5, 6, 7]
 
 const Browse = () => {
 
-    useGetAllJobs();
+    useGetAllJobs();        // Call custom hook to fetch all job data on mount
 
-    const {allJobs} = useSelector(store => store.job);
-    const dispatch = useDispatch();
+    const {allJobs} = useSelector(store => store.job);      // Extract allJobs data from Redux store (jobSlice)
+    const dispatch = useDispatch();                         // Create dispatch function to dispatch Redux actions
 
-    useEffect(() => {
-        return ()=> {
+    useEffect(() => {       // useEffect to clean up the searched query when component unmounts
+        return ()=> {       // Return a function that resets search query on component unmount
             dispatch(setSearchedQuery(""));
         }
-    })
+    }, [dispatch]);         // Add dispatch to dependency array (best practice)
     
     return (
         <div>
@@ -29,6 +29,7 @@ const Browse = () => {
 
                     {
                         // randomjobs.map((item, index) => {
+                            // Loop through all jobs and render each Job component
                         allJobs.map((job) => {
                             return (
                                 <Job key={job._id} job={job} />
@@ -41,4 +42,4 @@ const Browse = () => {
     )
 }
 
-export default Browse
+export default Browse;                  // Export Browse component as default

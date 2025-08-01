@@ -1,18 +1,18 @@
 import { Search } from "lucide-react";
 import React, { useState } from "react";
 import { Button } from "./ui/button";
-import { useDispatch } from "react-redux";
-import { setSearchedQuery } from "@/redux/jobSlice";
+import { useDispatch } from "react-redux";              // Importing Redux hook to dispatch actions
+import { setSearchedQuery } from "@/redux/jobSlice";    // Importing an action to set the search query in Redux store
 import { useNavigate } from "react-router-dom";
 
 const HeroSection = () => {
 
-    const [query, setQuery] = useState("");
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
+    const [query, setQuery] = useState("");         // Local state to track the value typed in the search input
+    const dispatch = useDispatch();                 // Redux dispatch function to dispatch actions
+    const navigate = useNavigate();     
     
-    const searchJobHandler = () => {
-        dispatch(setSearchedQuery(query));
+    const searchJobHandler = () => {                // Function to handle search button click
+        dispatch(setSearchedQuery(query));          // Dispatching the search query to Redux store
         navigate("/browse");
     }
     
@@ -44,4 +44,4 @@ const HeroSection = () => {
     );
 };
 
-export default HeroSection;
+export default HeroSection;     

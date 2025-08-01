@@ -10,18 +10,19 @@ const Job = ({job}) => {
     const navigate = useNavigate();
     // const jobId = "anjcknscn";
 
-    const daysAgoFunction = (mongodbTime) => {
-        const createdAt = new Date(mongodbTime);
-        const currentTime = new Date();
+    const daysAgoFunction = (mongodbTime) => {              // Function to calculate how many days ago the job was posted
+        const createdAt = new Date(mongodbTime);            // Convert MongoDB date string to JS Date object
+        const currentTime = new Date();                     // Current time
 
-        const timeDifference = currentTime - createdAt;
+        const timeDifference = currentTime - createdAt;     // Time difference in milliseconds
 
-        return Math.floor(timeDifference/(1000*24*60*60));
+        return Math.floor(timeDifference/(1000*24*60*60));  // Convert milliseconds to days and return
     }
     
     return (
         <div className="p-5 rounded-md shadow-lg bg-white border border-gray-100">
             <div className="flex items-center justify-between">
+                {/* Show "Today" if posted today, else show X days ago */}
                 <p className="text-sm text-gray-500">{daysAgoFunction(job?.createdAt) === 0 ? "Today" : `${daysAgoFunction(job?.createdAt)} days ago` }</p>
                 <Button variant="outline" className={"rounded-full"} size="icon">
                     <Bookmark />
@@ -32,7 +33,6 @@ const Job = ({job}) => {
                     <Avatar>
                         <AvatarImage src={job?.company?.logo} />
                         {/* <AvatarImage src="https://cdn-icons-png.flaticon.com/128/270/270781.png" /> */}
-                        {/* <AvatarImage src="https://cdn-icons-png.flaticon.com/128/15189/15189159.png" /> */}
                     </Avatar>
                 </Button>
                 <div>

@@ -1,21 +1,22 @@
-import React, { useState } from 'react'
-import Navbar from '../shared/Navbar'
-import { Label } from '../ui/label'
-import { Input } from '../ui/input'
-import { Button } from '../ui/button'
-import { useSelector } from 'react-redux'
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
-import axios from 'axios'
-import { JOB_API_END_POINT } from '@/utils/constant'
-import { toast } from 'sonner'
-import { useNavigate } from 'react-router-dom'
-import { Loader2 } from 'lucide-react'
+import React, { useState } from 'react'     // Import necessary libraries and components
+import Navbar from '../shared/Navbar'       // Reusable navigation bar
+import { Label } from '../ui/label'         // Reusable navigation bar
+import { Input } from '../ui/input'         // Custom input field
+import { Button } from '../ui/button'       // Custom button component
+import { useSelector } from 'react-redux'   // Redux hook to read from state
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '../ui/select'   // Custom dropdown components
+import axios from 'axios'                   // HTTP client
+import { JOB_API_END_POINT } from '@/utils/constant'    // API endpoint for job-related requests
+import { toast } from 'sonner'              // Notification utility
+import { useNavigate } from 'react-router-dom'          // Navigation hook
+import { Loader2 } from 'lucide-react'      // Loading spinner icon
 
-const companyArray = [];
+const companyArray = [];                    // Unused array (can be removed)
 
-const PostJob = () => {
+const PostJob = () => {                     // Component definition
 
-    const [input, setInput] = useState({
+    // State management for form input and loading
+    const [input, setInput] = useState({            // Initialize job posting input fields
         title: "",
         description: "",
         requirements: "",
@@ -24,49 +25,52 @@ const PostJob = () => {
         jobType: "",
         experience: "",
         position: 0,
-        companyId: ""
+        companyId: ""                       // Will be set when a company is selected
     });
 
-    const [loading, setLoading] = useState(false);
-    const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);  // Tracks form submission status
+    const navigate = useNavigate();                 // Used to redirect after successful job posting
 
-    const { companies } = useSelector(store => store.company);
+    const { companies } = useSelector(store => store.company);  // Fetch companies from Redux store
 
-    const changeEventHandler = (e) => {
+    // Handlers for input and select
+    const changeEventHandler = (e) => {             // Handles changes to standard input fields
         setInput({ ...input, [e.target.name]: e.target.value });
     };
 
-    const selectChangeHandler = (value) => {
+    const selectChangeHandler = (value) => {        // Handles selection of company from dropdown
         const selectedCompany = companies.find((company) => company.name.toLowerCase() === value);
-        setInput({...input, companyId:selectedCompany._id});
+        setInput({...input, companyId:selectedCompany._id});    // Set selected company's ID
     }
 
-    const submitHandler = async(e) => {
-        e.preventDefault();
+    const submitHandler = async(e) => {     // Submit handler with API call
+        e.preventDefault();                 // Prevent page reload
         try {
-            setLoading(true);
+            setLoading(true);               // Show loader
             const res = await axios.post(`${JOB_API_END_POINT}/post`, input, {
                 headers:{
-                    'Content-Type':'application/json'
+                    'Content-Type':'application/json'   // Send JSON body
                 },
-                withCredentials:true
+                withCredentials:true                    // Include cookies (if needed)
             });
             if(res.data.success){
-                toast.success(res.data.message);
-                navigate("/admin/jobs");
+                toast.success(res.data.message);        // Show success notification
+                navigate("/admin/jobs");                // Redirect to jobs listing page
             }
         } catch (error) {
-            toast.error(error.response.data.message);
+            toast.error(error.response.data.message);   // Show error notification
         } finally {
-            setLoading(false);
+            setLoading(false);                          // Hide loader
         }
     }
 
-    return (
+    return (                // JSX Markup (Render form)
         <div>
             <Navbar />
 
             <div className='flex items-center justify-center w-screen my-5'>
+
+                {/* All form inputs (8 fields) */}
                 <form onSubmit={submitHandler} className='p-8 max-w-4xl border-gray-200 shadow-lg rounded-md'>
                     <div className='grid grid-cols-2 gap-2'>
                         <div>
@@ -125,6 +129,7 @@ const PostJob = () => {
                                 onChange={changeEventHandler}
                                 className={'focus-visible:ring-offset-0 focus-visible:ring-0 my-1'} />
                         </div>
+                        {/* Company selection dropdown (only shows if companies exist) */}
                         {
                             companies.length > 0 && (
                                 <Select onValueChange={selectChangeHandler}>

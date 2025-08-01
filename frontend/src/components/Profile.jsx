@@ -5,20 +5,20 @@ import { Contact, Mail, Pen } from 'lucide-react'
 import { Button } from './ui/button'
 import { Badge } from './ui/badge'
 import { Label } from './ui/label'
-import AppliedJobTable from './AppliedJobTable'
-import UpdateProfileDialog from './UpdateProfileDialog'
-import { useSelector } from 'react-redux'
-import useGetAppliedJobs from '@/hooks/useGetAppliedJobs'
+import AppliedJobTable from './AppliedJobTable'           // Import child component to show applied jobs in a table format
+import UpdateProfileDialog from './UpdateProfileDialog'   // Import Dialog component to update user profile
+import { useSelector } from 'react-redux'                 // Import useSelector hook to access global state from Redux store
+import useGetAppliedJobs from '@/hooks/useGetAppliedJobs' // Custom hook to fetch user's applied jobs data
 
 // const skills = ["HTML", "CSS", "JavaScript", "React.js"]
 const isResume = true;
 
 const Profile = () => {
 
-  useGetAppliedJobs();
+  useGetAppliedJobs();          // Call the custom hook to fetch applied jobs (fires once on component mount)
 
-  const [open, setOpen] = useState(false);
-  const {user} = useSelector(store => store.auth);
+  const [open, setOpen] = useState(false);          // Local state to manage the dialog open/close state
+  const {user} = useSelector(store => store.auth);  // Get the authenticated user details from Redux store
 
   return (
     <div>
@@ -32,29 +32,28 @@ const Profile = () => {
             </Avatar>
             <div>
               <h1 className='font-medium text-xl'>{user?.fullname}</h1>
-              {/* <h1 className='font-medium text-xl'>Full Name</h1> */}
               <p>{user?.profile.bio}</p>
-              {/* <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error, provident.</p> */}
             </div>
           </div>
+
+          {/* Edit profile button (opens dialog) */}
           <Button onClick={ () => setOpen(true)} variant='outline' className='text-right'><Pen /></Button>
         </div>
         <div className='my-5'>
           <div className='flex items-center gap-3 my-2'>
             <Mail />
             <span>{user?.email}</span>
-            {/* <span>xyz@gmail.com</span> */}
           </div>
           <div className='flex items-center gap-3 my-2'>
             <Contact />
             <span>{user?.phoneNumber}</span>
-            {/* <span>7894561235</span> */}
           </div>
         </div>
         <div className='my-5'>
           <h1>Skills</h1>
           <div className='flex items-center gap-1'>
             {
+            // Check if skills exist, then display them using Badge component
               user?.profile.skills.length != 0 ? user?.profile.skills.map((item, index) => <Badge key={index}>{item}</Badge>) : <span>NA</span>
               // skills.length != 0 ? skills.map((item, index) => <Badge key={index}>{item}</Badge>) : <span>NA</span>
             }

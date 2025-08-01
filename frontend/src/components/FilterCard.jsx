@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { useDispatch } from 'react-redux'
-import { setSearchedQuery } from '@/redux/jobSlice'
+import { useDispatch } from 'react-redux'             // Hook to dispatch Redux actions
+import { setSearchedQuery } from '@/redux/jobSlice'   // Action to update the searched query in Redux state
 
-const filterData = [
+const filterData = [          // Predefined filter categories with options
   {
     filterType: "Location",
     array: ["Delhi NCR", "Bangalore", "Hyderabad", "Pune", "Mumbai"]
@@ -21,16 +21,15 @@ const filterData = [
 
 const FilterCard = () => {
 
-  const [selectedValue, setSelectedValue] = useState("");
+  const [selectedValue, setSelectedValue] = useState("");   // State to store the selected filter value
   const dispatch = useDispatch();
 
   const changeHandler = (value) => {
-    setSelectedValue(value);
+    setSelectedValue(value);          // Updates the selected value when user selects a filter
   }
 
   useEffect(() => {
-    // console.log(selectedValue);
-    dispatch(setSearchedQuery(selectedValue));
+    dispatch(setSearchedQuery(selectedValue));    // Whenever selectedValue changes, dispatch it to Redux store
   },[selectedValue]);
   
   return (
@@ -41,6 +40,7 @@ const FilterCard = () => {
         {
           filterData.map((data, index) => (
             <div>
+              {/* Key prop added to avoid React warning */}
               <h1 className='font-bold text-lg'>{data.filterType}</h1>
               {
                 data.array.map((item, idx) => {
@@ -56,17 +56,9 @@ const FilterCard = () => {
             </div>
           ))
         }
-        {/* <div className="flex items-center space-x-2">
-          <RadioGroupItem value="option-one" id="option-one" />
-          <Label htmlFor="option-one">Option One</Label>
-        </div>
-        <div className="flex items-center space-x-2">
-          <RadioGroupItem value="option-two" id="option-two" />
-          <Label htmlFor="option-two">Option Two</Label>
-        </div> */}
       </RadioGroup>
     </div>
   )
 }
 
-export default FilterCard
+export default FilterCard;    //   Exporting component for use elsewhere

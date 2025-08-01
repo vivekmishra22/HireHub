@@ -1,12 +1,12 @@
 import React from 'react'
-import LatestJobCards from './LatestJobCards';
-import { useSelector } from 'react-redux';
+import LatestJobCards from './LatestJobCards';      // Importing the LatestJobCards component that will be used to display individual job cards
+import { useSelector } from 'react-redux';          // Importing useSelector hook from react-redux to access Redux state
 
 // const randomJobs = [1, 2, 3, 4, 5, 6, 7, 8];
 
 const LatestJobs = () => {
 
-    const { allJobs } = useSelector(store => store.job);
+    const { allJobs } = useSelector(store => store.job);        // Destructuring allJobs from the Redux store's job slice
     
     return (
         <div className='max-w-7xl mx-auto my-20'>
@@ -14,6 +14,9 @@ const LatestJobs = () => {
             {/* Display multiple card */}
             <div className='grid grid-cols-3 gap-4 my-5'>
                 {
+                    // Conditional rendering:
+                    // If no jobs available, show fallback message
+                    // Otherwise, slice the first 6 jobs and map each to a LatestJobCards component
                     allJobs.length <= 0 ? <span>Job Not Available</span> : allJobs.slice(0, 6).map((job) => <LatestJobCards key={job._id} job={job} />)
                     // randomJobs.slice(0,6).map((Item, index) => <LatestJobCards />)
                 }
