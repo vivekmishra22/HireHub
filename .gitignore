@@ -1,3 +1,38 @@
-# dependencies
-/.env
-/node_module
+# Node modules (both root and subdirectories)
+node_modules/
+**/node_modules/
+
+# dotenv environment files
+.env
+**/.env
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS-generated files
+.DS_Store
+Thumbs.db
+
+# Optional: Ignore build/dist folders
+build/
+dist/
+**/build/
+**/dist/
+
+# VSCode & IDE files
+.vscode/
+.idea/
+
+# Optional: Ignore coverage reports from testing
+coverage/
+
+# Optional: Ignore local database dumps or temp files
+*.local
+*.sqlite
+
+# Mac/Unix-specific temp files
+*.swp
