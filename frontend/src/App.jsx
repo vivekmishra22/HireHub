@@ -72,7 +72,7 @@ function App() {    // Main App component
   return (
     <>
       {/* <Navbar /> */}
-      <Toaster position="top-right" />
+      {/* <Toaster position="top-right" /> */}
       {/* <AnimatePresence> */}
         {/* RouterProvider connects your routes to the app */}
       <RouterProvider router={appRouter} />
