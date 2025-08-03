@@ -43,27 +43,27 @@ const appRouter = createBrowserRouter([   // Define all application routes using
   // ---------- Admin routes (protected by role check) ----------
   {
     path:"/admin/companies",        // Admin: List of companies
-    element:<Companies/>
+    element:<ProtectedRoute><Companies/></ProtectedRoute>
   },
   {
     path:"/admin/companies/create",   // Admin: Create new company
-    element:<CompanyCreate/>
+    element:<ProtectedRoute><CompanyCreate/></ProtectedRoute>
   },
   {
     path:"/admin/companies/:id",    // Admin: Setup/edit specific company
-    element:<CompanySetup/>
+    element:<ProtectedRoute><CompanySetup/></ProtectedRoute>
   },
   {
     path:"/admin/jobs",            // Admin: View all jobs
-    element:<AdminJobs/>
+    element:<ProtectedRoute><AdminJobs/></ProtectedRoute>
   },
   {
     path:"/admin/jobs/create",    // Admin: Post a new job
-    element:<PostJob/>
+    element:<ProtectedRoute><PostJob/></ProtectedRoute>
   },
   {
     path:"/admin/jobs/:id/applicants",  // Admin: View job applicants
-    element:<Applicants/>
+    element:<ProtectedRoute><Applicants/></ProtectedRoute>
   },
 ])
 
