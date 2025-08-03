@@ -19,9 +19,9 @@ Thumbs.db
 
 # Optional: Ignore build/dist folders
 build/
-dist/
+# dist/
 **/build/
-**/dist/
+# **/dist/
 
 # VSCode & IDE files
 .vscode/
