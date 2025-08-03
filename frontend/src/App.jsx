@@ -23,7 +23,6 @@ import PostJob from './components/admin/PostJob'
 import Applicants from './components/admin/Applicants'
 
 // Wrapper component to protect admin routes (e.g., check if user is admin)
-import ProtectedRoute from './components/admin/ProtectedRoute'
 
 // Toast (optional UI enhancement)
 import { Toaster } from 'react-hot-toast'
@@ -43,27 +42,27 @@ const appRouter = createBrowserRouter([   // Define all application routes using
   // ---------- Admin routes (protected by role check) ----------
   {
     path:"/admin/companies",        // Admin: List of companies
-    element:<ProtectedRoute><Companies/></ProtectedRoute>
+    element:<Companies/>
   },
   {
     path:"/admin/companies/create",   // Admin: Create new company
-    element:<ProtectedRoute><CompanyCreate/></ProtectedRoute>
+    element:<CompanyCreate/>
   },
   {
     path:"/admin/companies/:id",    // Admin: Setup/edit specific company
-    element:<ProtectedRoute><CompanySetup/></ProtectedRoute>
+    element:<CompanySetup/>
   },
   {
     path:"/admin/jobs",            // Admin: View all jobs
-    element:<ProtectedRoute><AdminJobs/></ProtectedRoute>
+    element:<AdminJobs/>
   },
   {
     path:"/admin/jobs/create",    // Admin: Post a new job
-    element:<ProtectedRoute><PostJob/></ProtectedRoute>
+    element:<PostJob/>
   },
   {
     path:"/admin/jobs/:id/applicants",  // Admin: View job applicants
-    element:<ProtectedRoute><Applicants/></ProtectedRoute>
+    element:<Applicants/>
   },
 ])
 
