@@ -1,6 +1,6 @@
 // import './App.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'  // Import routing utilities from React Router
-import { AnimatePresence } from 'framer-motion'
+// import { AnimatePresence } from 'framer-motion'
 
 // Import all components/pages used in routing
 // Auth pages
