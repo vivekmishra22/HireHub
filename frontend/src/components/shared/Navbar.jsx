@@ -164,17 +164,13 @@ const Navbar = () => {          // Navbar component definition
                                             >
                                                 <UserRound size={16} /> Profile
                                             </Link>
-                                            <div className='flex w-fit items-center gap-2 cursor-pointer'>
-                                                <LogOut />
-                                                <Button onClick={logoutHandler} variant="link" >Logout</Button>
-                                            </div>
-                                            {/* <button
-                                                // onClick={logoutHandler}
+                                            <button
+                                                onClick={logoutHandler}
                                                 to={`/`}
                                                 className='flex items-center gap-2 px-3 py-2 hover:bg-red-50 rounded-md transition text-sm text-red-600'
                                             >
                                                 <LogOut size={16} /> Logout
-                                            </button> */}
+                                            </button>
                                         </div>
                                     </div>
                                 </motion.div>
