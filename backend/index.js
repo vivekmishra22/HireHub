@@ -42,8 +42,9 @@ app.use(express.urlencoded({ extended: true }));
 // extended: true => supports rich objects and arrays
 app.use(cookieParser());
 // ✅ Allows reading cookies from incoming requests via `req.cookies`
+// origin: 'http://localhost:5173',    // ✅ Allow frontend from this origin
 const corsOptions = {
-    origin: 'http://localhost:5173',    // ✅ Allow frontend from this origin
+    origin: 'https://hirehubcareers.netlify.app/',    // ✅ Allow frontend from this origin
     credentials: true                   // ✅ Allow cookies and credentials to be sent
 };
 app.use(cors(corsOptions)); // ✅ Applies the CORS policy to all incoming requests
