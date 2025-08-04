@@ -1,5 +1,5 @@
 // API base endpoint for user-related operations (e.g., login, signup, profile update)
-export const USER_API_END_POINT = "https://hirehub-d63h.onrender.com/api/v1/user";
+export const USER_API_END_POINT = "https://hirehub-d63h.onrender.com/api/v1/user" || "https://hirehubcareers.netlify.app/api/v1/user";
 // export const USER_API_END_POINT = "http://localhost:8000/api/v1/user";
 
 // API base endpoint for job-related operations (e.g., post job, get jobs, update job)
