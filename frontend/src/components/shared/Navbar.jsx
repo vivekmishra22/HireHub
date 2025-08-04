@@ -40,15 +40,15 @@ const Navbar = () => {          // Navbar component definition
         }
     }
 
-    //     const handleLogout = async () => {
+    // const handleLogout = async () => {
     //     try {
-    //       await logoutApi().unwrap()
-    //       dispatch(logout())
-    //       navigate('/login')
+    //         await logoutApi().unwrap()
+    //         dispatch(logout())
+    //         navigate('/login')
     //     } catch (error) {
-    //       console.error('Logout error:', error)
+    //         console.error('Logout error:', error)
     //     }
-    //   }
+    // }
 
     return (        // JSX return block
         <header className='w-full px-4 md:px-20 py-4 border-b shadow-sm bg-white sticky top-0 z-50'>
@@ -164,12 +164,17 @@ const Navbar = () => {          // Navbar component definition
                                             >
                                                 <UserRound size={16} /> Profile
                                             </Link>
-                                            <button
-                                                onClick={logoutHandler}
+                                            <div className='flex w-fit items-center gap-2 cursor-pointer'>
+                                                <LogOut />
+                                                <Button onClick={logoutHandler} variant="link" >Logout</Button>
+                                            </div>
+                                            {/* <button
+                                                // onClick={logoutHandler}
+                                                to={`/`}
                                                 className='flex items-center gap-2 px-3 py-2 hover:bg-red-50 rounded-md transition text-sm text-red-600'
                                             >
                                                 <LogOut size={16} /> Logout
-                                            </button>
+                                            </button> */}
                                         </div>
                                     </div>
                                 </motion.div>

@@ -12,3 +12,4 @@ export const APPLICATION_API_END_POINT = "https://hirehubcareers.netlify.app/api
 
 // API base endpoint for company-related operations (e.g., create company, manage details)
 export const COMPANY_API_END_POINT = "https://hirehubcareers.netlify.app/api/v1/company";
+// export const COMPANY_API_END_POINT = "http://localhost:8000/api/v1/company";
