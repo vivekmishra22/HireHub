@@ -42,12 +42,30 @@ app.use(express.urlencoded({ extended: true }));
 // extended: true => supports rich objects and arrays
 app.use(cookieParser());
 // ✅ Allows reading cookies from incoming requests via `req.cookies`
+// const corsOptions = {
+//     origin: 'https://hirehub-d63h.onrender.com',    // ✅ Allow backend from this origin
+//     origin: 'https://hirehubcareers.netlify.app',    // ✅ Allow frontend from this origin
+//     origin: 'http://localhost:5173',    // ✅ Allow frontend from this origin
+//     credentials: true                   // ✅ Allow cookies and credentials to be sent
+// };
+
+const allowedOrigins = [
+  'https://hirehub-d63h.onrender.com',
+  'https://hirehubcareers.netlify.app',
+  'http://localhost:5173',
+];
+
 const corsOptions = {
-    origin: 'https://hirehub-d63h.onrender.com',    // ✅ Allow backend from this origin
-    origin: 'https://hirehubcareers.netlify.app',    // ✅ Allow frontend from this origin
-    origin: 'http://localhost:5173',    // ✅ Allow frontend from this origin
-    credentials: true                   // ✅ Allow cookies and credentials to be sent
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true); // ✅ Allow the request
+    } else {
+      callback(new Error('Not allowed by CORS')); // ❌ Block other origins
+    }
+  },
+  credentials: true, // ✅ Allow cookies and credentials
 };
+
 app.use(cors(corsOptions)); // ✅ Applies the CORS policy to all incoming requests
 
 const PORT = process.env.PORT || 3000;  // ✅ Tries to use the port defined in `.env`; if not present, defaults to 3000
