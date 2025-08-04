@@ -134,12 +134,12 @@ const Login = () => {     // Login component
                 <input
                   type="radio"
                   name="role"
-                  value="admin"
-                  checked={input.role === "admin"}
+                  value="recruiter"
+                  checked={input.role === "recruiter"}
                   onChange={(e) => setInput({ ...input, role: e.target.value })}
                   className="mr-2"
                 />
-                Admin
+                Recruiter
               </label>
             </div>
           </div>
