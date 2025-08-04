@@ -48,27 +48,19 @@ app.use(cookieParser());
 //     origin: 'http://localhost:5173',    // ✅ Allow frontend from this origin
 //     credentials: true                   // ✅ Allow cookies and credentials to be sent
 // };
-
-const allowedOrigins = [
-  'https://hirehub-d63h.onrender.com',
-  'https://hirehubcareers.netlify.app',
-  'http://localhost:5173',
-];
-
 const corsOptions = {
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true); // ✅ Allow the request
-    } else {
-      callback(new Error('Not allowed by CORS')); // ❌ Block other origins
-    }
-  },
-  credentials: true, // ✅ Allow cookies and credentials
+  origin: [
+    'https://hirehubcareers.netlify.app',
+    'https://hirehub-d63h.onrender.com',
+    'http://localhost:5173'
+  ],
+  credentials: true
 };
-
 app.use(cors(corsOptions)); // ✅ Applies the CORS policy to all incoming requests
 
 const PORT = process.env.PORT || 3000;  // ✅ Tries to use the port defined in `.env`; if not present, defaults to 3000
+
+app.options('*', cors(corsOptions)); // Handle OPTIONS requests
 
 // Api's
 app.use("/api/v1/user", userRoute); // ✅ All user-related endpoints will now start with `/api/v1/user`
