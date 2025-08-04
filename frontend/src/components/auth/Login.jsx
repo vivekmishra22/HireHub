@@ -46,7 +46,7 @@ const Login = () => {     // Login component
 
     try {
       dispatch(setLoading(true));   // Set loading to true in Redux store
-      const res = await axios.post(`https://hirehub-d63h.onrender.com/api/v1/user/login`, input, {
+      const res = await axios.post(`${USER_API_END_POINT}/login`, input, {
         headers: {
           "Content-Type": "application/json"    // Sending data as JSON
         },
