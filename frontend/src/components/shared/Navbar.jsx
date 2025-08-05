@@ -175,6 +175,7 @@ const Navbar = () => {          // Navbar component definition
                                     </div>
                                 </motion.div>
                             </PopoverContent>
+                            
                         </Popover>
                         // <Popover>
                         //     {/* Avatar as dropdown trigger */}

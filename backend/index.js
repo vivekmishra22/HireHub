@@ -69,9 +69,9 @@ app.use("/api/v1/job", jobRoute);   // ✅ All job-related endpoints will start 
 app.use("/api/v1/application", applicationRoute);   // ✅ All application-related endpoints will start with `/api/v1/application`
 
 app.use(express.static(path.join(__dirname, "/frontend/dist")));
-// app.get('/*', (req, res) => {
-//   res.sendFile(path.resolve(__dirname, "frontend", "dist", "index.html"))
-// });
+app.get('/*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, "frontend", "dist", "index.html"))
+});
 
 app.listen(PORT, () => {
     connectDB();    // ✅ Establish MongoDB connection when the server starts
