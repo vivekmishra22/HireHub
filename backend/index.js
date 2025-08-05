@@ -48,14 +48,34 @@ app.use(cookieParser());
 //     origin: 'http://localhost:5173',    // ✅ Allow frontend from this origin
 //     credentials: true                   // ✅ Allow cookies and credentials to be sent
 // };
+
+// const corsOptions = {
+//   origin: [
+//     'https://hirehubcareers.netlify.app',
+//     'https://hirehub-d63h.onrender.com',
+//     'http://localhost:5173'
+//   ],
+//   credentials: true
+// };
+
+const allowedOrigins = [
+  'https://hirehubcareers.netlify.app',
+  'https://hirehub-d63h.onrender.com',
+  'http://localhost:5173'
+];
+
 const corsOptions = {
-  origin: [
-    'https://hirehubcareers.netlify.app',
-    'https://hirehub-d63h.onrender.com',
-    'http://localhost:5173'
-  ],
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true
 };
+
+
 app.use(cors(corsOptions)); // ✅ Applies the CORS policy to all incoming requests
 
 const PORT = process.env.PORT || 3000;  // ✅ Tries to use the port defined in `.env`; if not present, defaults to 3000
@@ -74,6 +94,6 @@ app.get('/*', (req, res) => {
 });
 
 app.listen(PORT, () => {
-    connectDB();    // ✅ Establish MongoDB connection when the server starts
-    console.log(`Server running at port ${PORT}`);  // ✅ Logs to console that the server is up and running
+  connectDB();    // ✅ Establish MongoDB connection when the server starts
+  console.log(`Server running at port ${PORT}`);  // ✅ Logs to console that the server is up and running
 });
