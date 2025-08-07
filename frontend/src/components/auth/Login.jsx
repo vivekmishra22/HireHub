@@ -93,7 +93,7 @@ const Login = () => {     // Login component
             className="w-full max-w-md bg-white shadow-lg rounded-lg p-8"
           // className="w-full sm:w-[90%] md:w-2/3 lg:w-1/2 bg-white shadow-lg rounded-2xl p-8 animate-in fade-in zoom-in-50"
           >
-            <h2 className="text-3xl font-bold text-cyan-600 text-center my-4">
+            <h2 className="text-3xl font-bold text-cyan-600 text-center mb-6 mt-4">
               Login to Your Account
             </h2>
             {/* <p className="text-sm text-gray-600 text-center mb-6">
@@ -156,11 +156,14 @@ const Login = () => {     // Login component
               </div>
               {
                 loading ? <Button className="w-full my-4"> <Loader2 className='mr-2 h-4 w-4 animate-spin' /> Please wait </Button> :
-                  <Button type="submit" className="w-full my-4">Login</Button>
+                  <Button type="submit"
+                    className="w-full bg-cyan-600 hover:bg-cyan-700 text-white font-semibold py-2 px-4 rounded shadow transition duration-200">
+                    Login
+                  </Button>
               }
               <p className="mt-6 text-center text-sm text-gray-600">
                 Don't have an account?{" "}
-                <Link href="/signup" className="text-blue-600 hover:underline hover:text-blue-700">Sign Up</Link>
+                <Link to="/signup" className="text-blue-600 hover:underline hover:text-blue-700">Sign Up</Link>
               </p>
             </form>
 
