@@ -74,91 +74,104 @@ const Login = () => {     // Login component
 
   return (    // JSX returned by component
 
-    <div className="min-h-screen flex flex-col bg-[#f8fafc]">
+    <>
+      {/* <div className="min-h-screen flex flex-col bg-[#f8fafc]"> */}
 
-      <Navbar />
 
       {/* centered layout with soft background */}
-      <div className="flex items-center justify-center bg-[#f8fafc] px-4 py-20">
-        <motion.form
-          onSubmit={submitHandler}
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.4 }}
-          className="w-full sm:w-[90%] md:w-2/3 lg:w-1/2 bg-white shadow-lg rounded-2xl p-8 animate-in fade-in zoom-in-50"
-        >
-          <h2 className="text-3xl font-bold text-gray-800 text-center mb-2">Login</h2>
-          {/* <p className="text-sm text-gray-600 text-center mb-6">
+      {/* <div className="flex items-center justify-center bg-[#f8fafc] px-4 py-20"> */}
+      <div className='min-h-screen bg-gray-50 flex flex-col'>
+        <Navbar />
+        <div className="flex-1 flex items-center justify-center px-4">
+
+
+          <motion.div
+            // onSubmit={submitHandler}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="w-full max-w-md bg-white shadow-lg rounded-lg p-8"
+          // className="w-full sm:w-[90%] md:w-2/3 lg:w-1/2 bg-white shadow-lg rounded-2xl p-8 animate-in fade-in zoom-in-50"
+          >
+            <h2 className="text-3xl font-bold text-cyan-600 text-center my-4">
+              Login to Your Account
+            </h2>
+            {/* <p className="text-sm text-gray-600 text-center mb-6">
           Login to access your dashboard
         </p> */}
 
-          <div className="mb-4">
-            <Label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</Label>
-            <Input
-              id="email"
-              type="email"
-              value={input.email}
-              onChange={(e) => setInput({ ...input, email: e.target.value })}
-              placeholder="Enter your email"
-              className="mt-1"
-            />
-          </div>
-
-          <div className="mb-4">
-            <Label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</Label>
-            <Input
-              id="password"
-              type="password"
-              value={input.password}
-              onChange={(e) => setInput({ ...input, password: e.target.value })}
-              placeholder="Enter your password"
-              className="mt-1"
-            />
-          </div>
-
-          <div className="mb-4">
-            <Label className="block text-sm font-medium text-gray-700 mb-1">Role</Label>
-            <div className="flex items-center space-x-4">
-              <label className="flex items-center text-sm text-gray-600">
-                <input
-                  type="radio"
-                  name="role"
-                  value="student"
-                  checked={input.role === "student"}
-                  onChange={(e) => setInput({ ...input, role: e.target.value })}
-                  className="mr-2"
+            <form onSubmit={submitHandler} className="space-y-4">
+              <div className="mb-4">
+                <Label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  name="email"
+                  value={input.email}
+                  onChange={changeEventHandler}
+                  placeholder="Enter your email"
+                  className="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-cyan-600"
                 />
-                Student
-              </label>
-              <label className="flex items-center text-sm text-gray-600">
-                <input
-                  type="radio"
-                  name="role"
-                  value="recruiter"
-                  checked={input.role === "recruiter"}
-                  onChange={(e) => setInput({ ...input, role: e.target.value })}
-                  className="mr-2"
+              </div>
+
+              <div className="mb-4">
+                <Label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</Label>
+                <Input
+                  id="password"
+                  type="password"
+                  name="password"
+                  value={input.password}
+                  onChange={changeEventHandler}
+                  placeholder="Enter your password"
+                  className="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-cyan-600"
                 />
-                Recruiter
-              </label>
-            </div>
-          </div>
+              </div>
 
-          {/* ✅ Primary Button with custom color and disabled state */}
-          <Button
-            type="submit"
-            disabled={loading}
-            className={`w-full my-4 bg-indigo-600 hover:bg-indigo-700 text-white ${loading ? "opacity-50 cursor-not-allowed" : ""}`}
-          >
-            {loading ? "Logging in..." : "Login"}
-          </Button>
+              <div className="mb-4">
+                <Label className="block text-sm font-medium text-gray-700 mb-1">Role</Label>
+                <div className="flex items-center space-x-4">
+                  <label className="flex items-center text-sm text-gray-600">
+                    <input
+                      type="radio"
+                      name="role"
+                      value="student"
+                      checked={input.role === "student"}
+                      onChange={changeEventHandler}
+                      className="mr-2"
+                    />
+                    Student
+                  </label>
+                  <label className="flex items-center text-sm text-gray-600">
+                    <input
+                      type="radio"
+                      name="role"
+                      value="recruiter"
+                      checked={input.role === "recruiter"}
+                      onChange={changeEventHandler}
+                      className="mr-2"
+                    />
+                    Recruiter
+                  </label>
+                </div>
+              </div>
+              {
+                loading ? <Button className="w-full my-4"> <Loader2 className='mr-2 h-4 w-4 animate-spin' /> Please wait </Button> :
+                  <Button type="submit" className="w-full my-4">Login</Button>
+              }
+              <p className="mt-6 text-center text-sm text-gray-600">
+                Don't have an account?{" "}
+                <Link href="/signup" className="text-blue-600 hover:underline hover:text-blue-700">Sign Up</Link>
+              </p>
+            </form>
 
-          <p className="text-sm text-gray-600 text-center">
-            Don't have an account? <a href="/signup" className="text-indigo-600 hover:underline">Sign Up</a>
-          </p>
-        </motion.form>
+
+
+          </motion.div>
+        </div>
       </div>
-    </div>
+      {/* </div> */}
+    </>
+
 
     // <div className="min-h-screen bg-gray-50">   {/* Full screen height with light background */}
     //   <Navbar />    {/* Top navbar */}

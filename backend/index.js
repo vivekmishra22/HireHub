@@ -61,7 +61,8 @@ app.use(cookieParser());
 const allowedOrigins = [
   'https://hirehubcareers.netlify.app',
   'https://hirehub-d63h.onrender.com',
-  'http://localhost:5173'
+  'http://localhost:5173',
+  'http://localhost:8000'
 ];
 
 const corsOptions = {

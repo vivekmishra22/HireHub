@@ -28,15 +28,15 @@ const socialLinks = [
 const Footer = () => {        // Define the Footer component as a functional component
   return (
 
-    <footer className="border-t bg-slate-50 border-t-gray-200 py-10 mt-10">
-      <div className="container mx-auto px-4">
-        <div className="flex flex-col md:flex-row justify-between items-center">
+    <footer className="border-t bg-gray-50 border-gray-200 py-10 mt-10">
+      <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col md:flex-row justify-between items-center gap-y-6">
           <div className="mb-6 md:mb-0 text-center md:text-left">
-            <h2 className="text-2xl font-semibold text-slate-800">Hire<span className="text-sky-500">Hub</span></h2>
-            <p className="text-sm text-slate-600 mt-1">© 2025 HireHub Inc. All rights reserved.</p>
+            <h2 className="text-2xl font-semibold text-gray-800">Hire<span className="text-cyan-600">Hub</span></h2>
+            <p className="text-sm text-gray-600 mt-1">© 2025 HireHub Inc. All rights reserved.</p>
           </div>
 
-          <div className="flex space-x-6 mt-4 md:mt-0">
+          <div className="flex space-x-6">
             {socialLinks.map(({ href, label, svg }, idx) => (
               <motion.a
                 key={idx}
@@ -45,8 +45,8 @@ const Footer = () => {        // Define the Footer component as a functional com
                 rel="noopener noreferrer"
                 aria-label={label}
                 title={label}
-                whileHover={{ scale: 1.2, color: '#0284c7' }}
-                className="text-slate-600 hover:text-sky-500 transition"
+                whileHover={{ scale: 1.2 }}
+                className="text-gray-600 hover:text-blue-600 transition-colors duration-200"
               >
                 <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                   {svg}

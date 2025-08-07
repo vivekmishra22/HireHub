@@ -1,10 +1,9 @@
 // import './App.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'  // Import routing utilities from React Router
-// import { AnimatePresence } from 'framer-motion'
 
 // Import all components/pages used in routing
 // Auth pages
-import Login from './components/auth/Login' 
+import Login from './components/auth/Login'
 import Signup from './components/auth/Signup'
 
 // Public user-facing pages
@@ -37,45 +36,44 @@ const appRouter = createBrowserRouter([   // Define all application routes using
   { path: '/description/:id', element: <JobDescription /> },    // Job description by ID
   { path: '/browse', element: <Browse /> },
   { path: '/profile', element: <Profile /> },
-  
-  
-  // ---------- Admin routes (protected by role check) ----------
-  {
-    path:"/admin/companies",        // Admin: List of companies
-    element:<Companies/>
-  },
-  {
-    path:"/admin/companies/create",   // Admin: Create new company
-    element:<CompanyCreate/>
-  },
-  {
-    path:"/admin/companies/:id",    // Admin: Setup/edit specific company
-    element:<CompanySetup/>
-  },
-  {
-    path:"/admin/jobs",            // Admin: View all jobs
-    element:<AdminJobs/>
-  },
-  {
-    path:"/admin/jobs/create",    // Admin: Post a new job
-    element:<PostJob/>
-  },
-  {
-    path:"/admin/jobs/:id/applicants",  // Admin: View job applicants
-    element:<Applicants/>
-  },
+
+
+  // ---------- Admin routes ----------
+  { path: "/admin/companies", element: <Companies /> },             // Admin: List of companies
+  { path: "/admin/companies/create", element: <CompanyCreate /> },   // Admin: Create new company
+  { path: "/admin/companies/:id", element: <CompanySetup /> },       // Admin: Setup/edit specific company
+  { path: "/admin/jobs", element: <AdminJobs /> },                   // Admin: View all jobs
+  { path: "/admin/jobs/create", element: <PostJob /> },              // Admin: Post a new job
+  { path: "/admin/jobs/:id/applicants", element: <Applicants /> },   // Admin: View job applicants
 ])
 
 function App() {    // Main App component
 
   return (
     <>
+
+      <div className="min-h-screen bg-white text-slate-800 flex flex-col">
+        {/* Navbar visible on all pages */}
+        {/* <Navbar /> */}
+
+        {/* Toast notification */}
+        <Toaster
+          position="top-right"
+          toastOptions={{
+            className:
+              'bg-cyan-500 text-white font-medium px-4 py-2 rounded shadow',
+          }}
+        />
+
+        {/* Page content */}
+        <RouterProvider router={appRouter} />
+
+      </div>
+
       {/* <Navbar /> */}
       {/* <Toaster position="top-right" /> */}
-      {/* <AnimatePresence> */}
-        {/* RouterProvider connects your routes to the app */}
-      <RouterProvider router={appRouter} />
-      {/* </AnimatePresence>    */}
+      {/* RouterProvider connects your routes to the app */}
+      {/* <RouterProvider router={appRouter} /> */}
     </>
   )
 }

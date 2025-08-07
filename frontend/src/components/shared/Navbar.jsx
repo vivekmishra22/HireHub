@@ -7,13 +7,13 @@ import { Button } from "@/components/ui/button"
 import { Avatar, AvatarImage } from "@/components/ui/avatar"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 
-import { LogOut, User2, UserRound } from 'lucide-react'    // Icons from lucide-react
-import { motion } from 'framer-motion'
+import { LogOut, UserRound } from 'lucide-react'    // Icons from lucide-react
 
 import { useDispatch, useSelector } from 'react-redux'  // Redux hooks to read and update state
 
-import { toast } from 'sonner'      // To show toast notifications
 import axios from 'axios'           // Axios for API requests
+import { toast } from 'sonner'      // To show toast notifications
+import { motion } from 'framer-motion'
 
 import { USER_API_END_POINT } from '@/utils/constant'       // Constant for backend API URL
 import { setUser } from '@/redux/authSlice'                 // Redux action to reset user on logout
@@ -36,7 +36,8 @@ const Navbar = () => {          // Navbar component definition
             }
         } catch (error) {
             console.log(error);     // Log error in console
-            toast.error(error.response.data.message);       // Show error toast
+            toast.error(error.response?.data?.message || 'Logout failed')
+            // toast.error(error.response.data.message);       // Show error toast
         }
     }
 
@@ -51,15 +52,22 @@ const Navbar = () => {          // Navbar component definition
     // }
 
     return (        // JSX return block
-        <header className='w-full px-4 md:px-20 py-4 border-b shadow-sm bg-white sticky top-0 z-50'>
+
+        <header className='w-full bg-white border-b shadow-sm sticky top-0 z-50 px-4 md:px-20 py-4'>
             {/* <div className='bg-white py-2'> */}
             <nav className='flex justify-between items-center'>
                 {/* <div className='flex items-center justify-between mx-auto max-w-7xl'>   Navbar wrapper with padding and max width */}
 
-                {/* Logo */}
                 {/* <div>
                         <h1 className='text-2xl font-bold'>Hire<span className='text-[#F83002]'>Hub</span></h1>
                     </div> */}
+
+                {/* Logo */}
+                {/* <Link to='/'>
+                    <h1 className='text-2xl font-bold text-gray-900'>
+                    Hire<span className='text-cyan-600'>Hub</span>
+                    </h1>
+                    </Link> */}
                 <Link to='/'>
                     <h1 className='text-2xl font-bold text-gray-900'>
                         Hire<span className='text-cyan-600'>Hub</span>
@@ -67,22 +75,22 @@ const Navbar = () => {          // Navbar component definition
                 </Link>
 
                 {/* Navigation links and buttons */}
-                <div className='flex items-center gap-8'>
+                <div className='flex items-center gap-6'>
                     {/* Conditional Navigation links */}
-                    <ul className='flex font-medium items-center gap-5'>
+                    <ul className='sm:flex items-center gap-5 text-gray-700 font-medium text-sm'>
                         {
                             user && user.role === 'recruiter' ? (
                                 // Links for recruiter/admin
                                 <>
-                                    <li><Link to='/admin/companies'>Companies</Link></li>
-                                    <li><Link to='/admin/jobs'>Jobs</Link></li>
+                                    <li><Link to='/admin/companies' className='hover:text-cyan-600 transition'>Companies</Link></li>
+                                    <li><Link to='/admin/jobs' className='hover:text-cyan-600 transition'>Jobs</Link></li>
                                 </>
                             ) : (
                                 // Links for normal users
                                 <>
-                                    <li><Link to='/'>Home</Link></li>
-                                    <li><Link to='/jobs'>Jobs</Link></li>
-                                    <li><Link to='/browse'>Browse</Link></li>
+                                    <li><Link to='/' className='hover:text-cyan-600 transition'>Home</Link></li>
+                                    <li><Link to='/jobs' className='hover:text-cyan-600 transition'>Jobs</Link></li>
+                                    <li><Link to='/browse' className='hover:text-cyan-600 transition'>Browse</Link></li>
                                 </>
                             )
                         }
@@ -101,19 +109,19 @@ const Navbar = () => {          // Navbar component definition
                                 </Link>
                             </div> */}
 
-                    {!user?.fullname ? (
-                        <>
+                    { !user ? (
+                        <div className='flex items-center gap-2'>
                             <Link to='/login'>
                                 <Button variant='ghost' className='text-gray-700'>
                                     Login
                                 </Button>
                             </Link>
                             <Link to='/signup'>
-                                <Button className='bg-indigo-600 hover:bg-indigo-700 text-white'>
+                                <Button className='bg-blue-600 hover:bg-blue-700 text-white'>
                                     Signup
                                 </Button>
                             </Link>
-                        </>
+                        </div>
 
                     ) : (
                         // If logged in: Show profile avatar and dropdown
@@ -148,10 +156,8 @@ const Navbar = () => {          // Navbar component definition
                                                     {(user?.fullname?.[0] || 'U').toUpperCase()}
                                                 </AvatarFallback>
                                             </Avatar>
-                                            <div className='space-y-1'>
-                                                <p className='text-sm font-medium text-gray-900'>
-                                                    {user?.fullname}
-                                                </p>
+                                            <div>
+                                                <p className='text-sm font-medium text-gray-900'> {user?.fullname} </p>
                                                 <p className='text-sm text-gray-500'>{user?.email}</p>
                                             </div>
                                         </div>
@@ -160,13 +166,13 @@ const Navbar = () => {          // Navbar component definition
                                             <Link
                                                 to={`/profile`}
                                                 // to={`/profile/${user?._id}`}
-                                                className='flex items-center gap-2 px-3 py-2 hover:bg-gray-100 rounded-md transition text-sm text-gray-700'
+                                                className='flex items-center gap-2 px-3 py-2 hover:bg-cyan-50 rounded-md transition text-sm text-gray-700'
                                             >
                                                 <UserRound size={16} /> Profile
                                             </Link>
                                             <button
                                                 onClick={logoutHandler}
-                                                to={`/`}
+                                                // to={`/`}
                                                 className='flex items-center gap-2 px-3 py-2 hover:bg-red-50 rounded-md transition text-sm text-red-600'
                                             >
                                                 <LogOut size={16} /> Logout
@@ -175,7 +181,7 @@ const Navbar = () => {          // Navbar component definition
                                     </div>
                                 </motion.div>
                             </PopoverContent>
-                            
+
                         </Popover>
                         // <Popover>
                         //     {/* Avatar as dropdown trigger */}
