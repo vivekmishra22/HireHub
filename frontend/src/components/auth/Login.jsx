@@ -27,7 +27,7 @@ const Login = () => {     // Login component
   const dispatch = useDispatch();     // Redux hook to dispatch actions
 
   const changeEventHandler = (e) => {   // Function to update local state whenever an input changes
-    setInput({ ...input, [e.target.name]: e.target.value });    // Update the corresponding field
+    setInput({ ...input, [e.target.name]: e.target.value.trim() });    // Update the corresponding field
   };
 
   // const submitHandler = async (e) => {
@@ -52,10 +52,10 @@ const Login = () => {     // Login component
         },
         withCredentials: true,    // Include cookies (for sessions/auth)
       });
+
       if (res.data.success) {     // If login is successful
         dispatch(setUser(res.data.user));   // Save user info in Redux store
         navigate("/");                      // Redirect to homepage
-        // router.push("/")
         toast.success(res.data.message);    // Show success toast
       }
     } catch (error) {
@@ -80,27 +80,25 @@ const Login = () => {     // Login component
 
       {/* centered layout with soft background */}
       {/* <div className="flex items-center justify-center bg-[#f8fafc] px-4 py-20"> */}
-      <div className='min-h-screen bg-gray-50 flex flex-col'>
+      <div className='min-h-screen flex flex-col'>
         <Navbar />
-        <div className="flex-1 flex items-center justify-center px-4">
-
+        <div className="flex-1 flex items-center justify-center p-4">
 
           <motion.div
-            // onSubmit={submitHandler}
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="w-full max-w-md bg-white shadow-lg rounded-lg p-8"
+            transition={{ duration: 0.4 }}
+            className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8 transition hover:shadow-xl"
           // className="w-full sm:w-[90%] md:w-2/3 lg:w-1/2 bg-white shadow-lg rounded-2xl p-8 animate-in fade-in zoom-in-50"
           >
-            <h2 className="text-3xl font-bold text-cyan-600 text-center mb-6">
+            <h2 className="text-3xl font-bold text-cyan-600 text-center mb-6" aria-label="Login Heading">
               Login to Your Account
             </h2>
             {/* <p className="text-sm text-gray-600 text-center mb-6">
           Login to access your dashboard
         </p> */}
 
-            <form onSubmit={submitHandler} className="space-y-4">
+            <form onSubmit={submitHandler} className="space-y-4" aria-label="Login form">
               <div className="mb-4">
                 <Label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</Label>
                 <Input
@@ -109,8 +107,9 @@ const Login = () => {     // Login component
                   name="email"
                   value={input.email}
                   onChange={changeEventHandler}
-                  placeholder="Enter your email"
-                  className="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-cyan-600"
+                  placeholder="you@example.com"
+                  autoComplete="email"
+                  className="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-cyan-500 focus:ring focus:ring-cyan-200 transition"
                 />
               </div>
 
@@ -122,14 +121,47 @@ const Login = () => {     // Login component
                   name="password"
                   value={input.password}
                   onChange={changeEventHandler}
-                  placeholder="Enter your password"
-                  className="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-cyan-600"
+                  placeholder="********"
+                  className="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-cyan-500 focus:ring focus:ring-cyan-200 transition"
                 />
               </div>
 
-              <div className="mb-4">
+              <fieldset>
+              <legend className="block text-sm font-medium text-gray-700">
+                Select Role
+              </legend>
+              <div className="flex items-center space-x-4 mt-1">
+                <label className="flex items-center text-sm text-gray-600 cursor-pointer hover:text-cyan-700 transition">
+                  <input
+                    type="radio"
+                    name="role"
+                    value="student"
+                    checked={input.role === "student"}
+                    onChange={changeEventHandler}
+                    aria-label="Student role"
+                    className="mr-2 accent-cyan-600"
+                  />
+                  Student
+                </label>
+                <label className="flex items-center text-sm text-gray-600 cursor-pointer hover:text-cyan-700 transition">
+                  <input
+                    type="radio"
+                    name="role"
+                    value="recruiter"
+                    checked={input.role === "recruiter"}
+                    onChange={changeEventHandler}
+                    aria-label="Recruiter role"
+                    className="mr-2 accent-cyan-600"
+                  />
+                  Recruiter
+                </label>
+              </div>
+            </fieldset>
+
+              {/* <div className="mb-4">
                 <Label className="block text-sm font-medium text-gray-700 mb-1">Role</Label>
-                <div className="flex items-center space-x-4">
+
+                <div className="flex items-center space-x-4" role="radiogroup" aria-label="Select role">
                   <label className="flex items-center text-sm text-gray-600">
                     <input
                       type="radio"
@@ -153,17 +185,25 @@ const Login = () => {     // Login component
                     Recruiter
                   </label>
                 </div>
-              </div>
+              </div> */}
               {
-                loading ? <Button className="w-full my-4"> <Loader2 className='mr-2 h-4 w-4 animate-spin' /> Please wait </Button> :
+                loading ?  ( 
+                <Button disabled className="w-full flex items-center justify-center bg-cyan-500 text-white py-2 rounded-lg font-semibold shadow hover:bg-cyan-600 transition disabled:opacity-70"
+                aria-label="Loading button"
+                > 
+                <Loader2 className='mr-2 h-4 w-4 animate-spin' /> Please wait 
+                </Button> 
+                ) : ( 
                   <Button type="submit"
-                    className="w-full bg-cyan-600 hover:bg-cyan-700 text-white font-semibold py-2 px-4 rounded shadow transition duration-200">
+                    className="w-full bg-cyan-600 hover:bg-cyan-700 text-white font-semibold py-2 rounded-lg shadow transition"
+                    aria-label="Login button"
+                    >
                     Login
                   </Button>
-              }
+              )}
               <p className="mt-6 text-center text-sm text-gray-600">
                 Don't have an account?{" "}
-                <Link to="/signup" className="text-blue-600 hover:underline hover:text-blue-700">Sign Up</Link>
+                <Link to="/signup" className="text-cyan-700 hover:underline font-medium" aria-label="Go to signup page" >Sign Up</Link>
               </p>
             </form>
 

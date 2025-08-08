@@ -1,5 +1,5 @@
 // React and Routing imports
-import React from 'react'
+import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
 // UI components from your UI library
@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Avatar, AvatarImage } from "@/components/ui/avatar"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 
-import { LogOut, UserRound } from 'lucide-react'    // Icons from lucide-react
+import { LogOut, Menu, UserRound } from 'lucide-react'    // Icons from lucide-react
 
 import { useDispatch, useSelector } from 'react-redux'  // Redux hooks to read and update state
 
@@ -25,6 +25,7 @@ const Navbar = () => {          // Navbar component definition
     // const [logoutApi] = useLogoutMutation()
     const dispatch = useDispatch();                         // Dispatch to trigger Redux actions
     const navigate = useNavigate();                         // useNavigate hook to redirect after logout
+    const [mobileOpen, setMobileOpen] = useState(false);
 
     const logoutHandler = async () => {             // Function to handle logout logic
         try {
@@ -53,9 +54,9 @@ const Navbar = () => {          // Navbar component definition
 
     return (        // JSX return block
 
-        <header className='w-full bg-white border-b shadow-sm sticky top-0 z-50 px-4 md:px-20 py-4'>
+        <header className='w-full bg-white border-b shadow-sm sticky top-0 z-50 rounded-full mx-2'>
             {/* <div className='bg-white py-2'> */}
-            <nav className='flex justify-between items-center'>
+            <nav className='flex justify-between items-center px-3 sm:px-6 lg:px-20 py-3'>
                 {/* <div className='flex items-center justify-between mx-auto max-w-7xl'>   Navbar wrapper with padding and max width */}
 
                 {/* <div>
@@ -74,10 +75,18 @@ const Navbar = () => {          // Navbar component definition
                     </h1>
                 </Link>
 
+                {/* Hamburger for Mobile */}
+                <button
+                    className="sm:hidden block text-gray-700"
+                    onClick={() => setMobileOpen(!mobileOpen)}
+                >
+                    <Menu size={24} />
+                </button>
+
                 {/* Navigation links and buttons */}
-                <div className='flex items-center gap-6'>
+                <div className='hidden sm:flex items-center gap-6'>
                     {/* Conditional Navigation links */}
-                    <ul className='sm:flex items-center gap-5 text-gray-700 font-medium text-sm'>
+                    <ul className='flex items-center gap-5 text-gray-700 font-medium text-sm'>
                         {
                             user && user.role === 'recruiter' ? (
                                 // Links for recruiter/admin
@@ -109,15 +118,15 @@ const Navbar = () => {          // Navbar component definition
                                 </Link>
                             </div> */}
 
-                    { !user ? (
+                    {!user ? (
                         <div className='flex items-center gap-2'>
                             <Link to='/login'>
-                                <Button variant='ghost' className='text-gray-700'>
+                                <Button variant='ghost' className='text-gray-700 hover:scale-105 transition'>
                                     Login
                                 </Button>
                             </Link>
                             <Link to='/signup'>
-                                <Button className='bg-blue-600 hover:bg-blue-700 text-white'>
+                                <Button className='bg-cyan-600 hover:bg-cyan-700 text-white hover:scale-105 transition'>
                                     Signup
                                 </Button>
                             </Link>
@@ -127,7 +136,7 @@ const Navbar = () => {          // Navbar component definition
                         // If logged in: Show profile avatar and dropdown
                         <Popover>
                             <PopoverTrigger asChild>
-                                <Avatar className='cursor-pointer border'>
+                                <Avatar className='cursor-pointer border hover:scale-105 transition'>
                                     <AvatarImage
                                         src={user?.profile?.profilePhoto}
                                         alt={`${user?.fullname || 'User'} profile`}
@@ -138,50 +147,33 @@ const Navbar = () => {          // Navbar component definition
                                 </Avatar>
                             </PopoverTrigger>
 
-                            <PopoverContent asChild align='end' className='w-80'>
-                                <motion.div
-                                    initial={{ opacity: 0, y: -10 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    exit={{ opacity: 0, y: -10 }}
-                                    transition={{ duration: 0.2 }}
-                                >
-                                    <div className='flex flex-col gap-4'>
-                                        <div className='flex items-center gap-3'>
-                                            <Avatar>
-                                                <AvatarImage
-                                                    src={user?.profile?.profilePhoto}
-                                                    alt={`${user?.fullname || 'User'} profile`}
-                                                />
-                                                <AvatarFallback>
-                                                    {(user?.fullname?.[0] || 'U').toUpperCase()}
-                                                </AvatarFallback>
-                                            </Avatar>
-                                            <div>
-                                                <p className='text-sm font-medium text-gray-900'> {user?.fullname} </p>
-                                                <p className='text-sm text-gray-500'>{user?.email}</p>
-                                            </div>
-                                        </div>
-
-                                        <div className='flex flex-col gap-1'>
-                                            <Link
-                                                to={`/profile`}
-                                                // to={`/profile/${user?._id}`}
-                                                className='flex items-center gap-2 px-3 py-2 hover:bg-cyan-50 rounded-md transition text-sm text-gray-700'
-                                            >
-                                                <UserRound size={16} /> Profile
-                                            </Link>
-                                            <button
-                                                onClick={logoutHandler}
-                                                // to={`/`}
-                                                className='flex items-center gap-2 px-3 py-2 hover:bg-red-50 rounded-md transition text-sm text-red-600'
-                                            >
-                                                <LogOut size={16} /> Logout
-                                            </button>
+                            <PopoverContent asChild align='end' className='w-72'>
+                                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+                                    <div className='flex flex-col gap-4 p-2'>
+                                        <Avatar>
+                                            <AvatarImage
+                                                src={user?.profile?.profilePhoto}
+                                                alt={`${user?.fullname || 'User'} profile`}
+                                            />
+                                            <AvatarFallback>
+                                                {(user?.fullname?.[0] || 'U').toUpperCase()}
+                                            </AvatarFallback>
+                                        </Avatar>
+                                        <div>
+                                            <p className='font-medium'> {user?.fullname} </p>
+                                            <p className='text-sm text-gray-500'>{user?.email}</p>
                                         </div>
                                     </div>
+
+                                    <Link to="/profile" className='flex items-center gap-2 p-2 hover:bg-cyan-50 rounded-md text-sm'>
+                                        <UserRound size={16} /> Profile
+                                    </Link>
+                                    <button onClick={logoutHandler} className='w-full flex items-center gap-2 p-2 hover:bg-red-50 rounded-md text-sm text-red-600'>
+                                        <LogOut size={16} /> Logout
+                                    </button>
+
                                 </motion.div>
                             </PopoverContent>
-
                         </Popover>
                         // <Popover>
                         //     {/* Avatar as dropdown trigger */}
@@ -228,11 +220,46 @@ const Navbar = () => {          // Navbar component definition
                         // </Popover>
                     )
                     }
-
-
                 </div>
                 {/* </div> */}
             </nav>
+
+            {/* Mobile Menu */}
+            {mobileOpen && (
+                <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                    className="sm:hidden bg-white border-t shadow-md">
+                    <ul className="flex flex-col p-4 gap-3">
+                        {user && user.role === 'recruiter' ? (
+                            <>
+                                <Link to="/admin/companies" onClick={() => setMobileOpen(false)}>Companies</Link>
+                                <Link to="/admin/jobs" onClick={() => setMobileOpen(false)}>Jobs</Link>
+                            </>
+                        ) : (
+                            <>
+                                <Link to="/" onClick={() => setMobileOpen(false)}>Home</Link>
+                                <Link to="/jobs" onClick={() => setMobileOpen(false)}>Jobs</Link>
+                                <Link to="/browse" onClick={() => setMobileOpen(false)}>Browse</Link>
+                            </>
+                        )}
+                        {!user ? (
+                            <>
+                                <Link to="/login" onClick={() => setMobileOpen(false)}>Login</Link>
+                                <Link to="/signup" onClick={() => setMobileOpen(false)}>Signup</Link>
+                            </>
+                        ) : (
+                            <>
+                                <Link to="/profile" onClick={() => setMobileOpen(false)}>Profile</Link>
+                                <button onClick={() => { logoutHandler(); setMobileOpen(false); }} className="text-left text-red-600">Logout</button>
+                            </>
+                        )}
+                    </ul>
+                </motion.div>
+            )}
+
             {/* </div > */}
         </header>
     )

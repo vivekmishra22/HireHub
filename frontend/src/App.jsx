@@ -26,6 +26,7 @@ import Applicants from './components/admin/Applicants'
 // Toast (optional UI enhancement)
 import { Toaster } from 'react-hot-toast'
 import Navbar from './components/shared/Navbar'
+import Footer from './components/shared/Footer'
 
 const appRouter = createBrowserRouter([   // Define all application routes using createBrowserRouter
 
@@ -52,8 +53,8 @@ function App() {    // Main App component
   return (
     <>
 
-      <div className="min-h-screen bg-white text-slate-800 flex flex-col">
-        {/* Navbar visible on all pages */}
+      {/* <div className="min-h-screen bg-white text-slate-800 flex flex-col"> */}
+      <div className="min-h-screen bg-gradient-to-br from-cyan-50 via-white to-blue-50 text-gray-800 flex flex-col transition-all duration-300">
         {/* <Navbar /> */}
 
         {/* Toast notification */}
@@ -61,14 +62,24 @@ function App() {    // Main App component
           position="top-right"
           toastOptions={{
             className:
-              'bg-cyan-500 text-white font-medium px-4 py-2 rounded shadow',
+              // 'bg-cyan-500 text-white font-medium px-4 py-2 rounded shadow',
+              'bg-cyan-600 hover:bg-cyan-700 text-white font-medium px-4 py-2 rounded-lg shadow-lg transition-all duration-300',
           }}
         />
 
-        {/* Page content */}
-        <RouterProvider router={appRouter} />
+        <div className="flex-1 w-full px-4 sm:px-6 lg:px-8 py-6">
+          <RouterProvider router={appRouter} />
+        </div>
+
+        <Footer/>
+
+        {/* <footer className="bg-cyan-700 text-white text-center py-4 mt-auto shadow-inner">
+          <p className="text-sm sm:text-base">© {new Date().getFullYear()} HireHub. All rights reserved.</p>
+        </footer> */}
 
       </div>
+
+
 
       {/* <Navbar /> */}
       {/* <Toaster position="top-right" /> */}

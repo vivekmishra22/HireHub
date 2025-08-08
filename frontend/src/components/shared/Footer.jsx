@@ -28,12 +28,21 @@ const socialLinks = [
 const Footer = () => {        // Define the Footer component as a functional component
   return (
 
-    <footer className="border-t bg-gray-50 border-gray-200 py-10 mt-10">
+    <motion.footer
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4 }}
+      className="border-t bg-gray-50 border-gray-200 py-10 mt-10 shadow-inner">
       <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row justify-between items-center gap-y-6">
-          <div className="mb-6 md:mb-0 text-center md:text-left">
-            <h2 className="text-2xl font-semibold text-gray-800">Hire<span className="text-cyan-600">Hub</span></h2>
-            <p className="text-sm text-gray-600 mt-1">© 2025 HireHub Inc. All rights reserved.</p>
+
+          <div className="text-center md:text-left">
+            <h2 className="text-2xl font-semibold text-gray-800">
+              Hire<span className="text-cyan-600">Hub</span>
+            </h2>
+            <p className="text-sm text-gray-600 mt-1">
+              © 2025 HireHub Inc. All rights reserved.
+            </p>
           </div>
 
           <div className="flex space-x-6">
@@ -46,7 +55,7 @@ const Footer = () => {        // Define the Footer component as a functional com
                 aria-label={label}
                 title={label}
                 whileHover={{ scale: 1.2 }}
-                className="text-gray-600 hover:text-blue-600 transition-colors duration-200"
+                className="text-gray-600 hover:text-cyan-500 hover:scale-110 transition-transform duration-300"
               >
                 <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                   {svg}
@@ -56,7 +65,7 @@ const Footer = () => {        // Define the Footer component as a functional com
           </div>
         </div>
       </div>
-    </footer>
+    </motion.footer>
 
     // <footer className="border-t border-t-gray-200 py-8">
     //   <div className="container mx-auto px-4">
