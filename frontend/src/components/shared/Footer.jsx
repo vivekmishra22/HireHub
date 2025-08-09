@@ -29,12 +29,18 @@ const Footer = () => {        // Define the Footer component as a functional com
   return (
 
     <motion.footer
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4 }}
-      className="border-t bg-gray-50 border-gray-200 py-10 mt-10 shadow-inner">
+      initial="hidden"
+      animate="visible"
+      variants={{
+        hidden: { opacity: 0 },
+        visible: {
+          opacity: 1,
+          transition: { staggerChildren: 0.1 }
+        }
+      }}
+      className="border-t bg-gray-50 border-gray-200 py-8 mt-10 shadow-inner">
       <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row justify-between items-center gap-y-6">
+        <div className="flex flex-col md:flex-row justify-between items-center gap-6">
 
           <div className="text-center md:text-left">
             <h2 className="text-2xl font-semibold text-gray-800">
@@ -45,7 +51,7 @@ const Footer = () => {        // Define the Footer component as a functional com
             </p>
           </div>
 
-          <div className="flex space-x-6">
+          <div className="flex space-x-4">
             {socialLinks.map(({ href, label, svg }, idx) => (
               <motion.a
                 key={idx}
@@ -54,10 +60,14 @@ const Footer = () => {        // Define the Footer component as a functional com
                 rel="noopener noreferrer"
                 aria-label={label}
                 title={label}
-                whileHover={{ scale: 1.2 }}
-                className="text-gray-600 hover:text-cyan-500 hover:scale-110 transition-transform duration-300"
+                variants={{
+                  hidden: { opacity: 0, y: 10 },
+                  visible: { opacity: 1, y: 0 }
+                }}
+                whileHover={{ scale: 1.15 }}
+                className="p-2 rounded-full text-gray-600 hover:text-cyan-500 transition-colors duration-300"
               >
-                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                   {svg}
                 </svg>
               </motion.a>

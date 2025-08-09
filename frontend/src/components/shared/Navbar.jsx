@@ -42,43 +42,23 @@ const Navbar = () => {          // Navbar component definition
         }
     }
 
-    // const handleLogout = async () => {
-    //     try {
-    //         await logoutApi().unwrap()
-    //         dispatch(logout())
-    //         navigate('/login')
-    //     } catch (error) {
-    //         console.error('Logout error:', error)
-    //     }
-    // }
-
     return (        // JSX return block
 
-        <header className='w-full bg-white border-b shadow-sm sticky top-0 z-50 rounded-full mx-2'>
+        <header className='w-full bg-white border-b shadow-sm sticky top-0 z-50 rounded-full'>
             {/* <div className='bg-white py-2'> */}
             <nav className='flex justify-between items-center px-3 sm:px-6 lg:px-20 py-3'>
-                {/* <div className='flex items-center justify-between mx-auto max-w-7xl'>   Navbar wrapper with padding and max width */}
-
-                {/* <div>
-                        <h1 className='text-2xl font-bold'>Hire<span className='text-[#F83002]'>Hub</span></h1>
-                    </div> */}
-
-                {/* Logo */}
-                {/* <Link to='/'>
-                    <h1 className='text-2xl font-bold text-gray-900'>
-                    Hire<span className='text-cyan-600'>Hub</span>
-                    </h1>
-                    </Link> */}
+                
                 <Link to='/'>
                     <h1 className='text-2xl font-bold text-gray-900'>
                         Hire<span className='text-cyan-600'>Hub</span>
                     </h1>
                 </Link>
 
-                {/* Hamburger for Mobile */}
+                {/* Mobile Menu Toggle */}
                 <button
-                    className="sm:hidden block text-gray-700"
+                    className="sm:hidden block text-gray-700 hover:text-cyan-600 transition"
                     onClick={() => setMobileOpen(!mobileOpen)}
+                    aria-label="Toggle Menu"
                 >
                     <Menu size={24} />
                 </button>
@@ -121,12 +101,12 @@ const Navbar = () => {          // Navbar component definition
                     {!user ? (
                         <div className='flex items-center gap-2'>
                             <Link to='/login'>
-                                <Button variant='ghost' className='text-gray-700 hover:scale-105 transition'>
+                                <Button variant='ghost' className='bg-white border border-gray-300 text-gray-700 hover:bg-gray-100 transition'>
                                     Login
                                 </Button>
                             </Link>
                             <Link to='/signup'>
-                                <Button className='bg-cyan-600 hover:bg-cyan-700 text-white hover:scale-105 transition'>
+                                <Button className='bg-cyan-600 hover:bg-cyan-700 text-white transition'>
                                     Signup
                                 </Button>
                             </Link>
@@ -149,7 +129,7 @@ const Navbar = () => {          // Navbar component definition
 
                             <PopoverContent asChild align='end' className='w-72'>
                                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-                                    <div className='flex flex-col gap-4 p-2'>
+                                    <div className='flex items-center gap-3 p-3 border-b'>
                                         <Avatar>
                                             <AvatarImage
                                                 src={user?.profile?.profilePhoto}
@@ -229,10 +209,9 @@ const Navbar = () => {          // Navbar component definition
                 <motion.div
                     initial={{ height: 0, opacity: 0 }}
                     animate={{ height: "auto", opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
                     transition={{ duration: 0.2 }}
                     className="sm:hidden bg-white border-t shadow-md">
-                    <ul className="flex flex-col p-4 gap-3">
+                    <ul className="flex flex-col p-4 gap-3 text-gray-700">
                         {user && user.role === 'recruiter' ? (
                             <>
                                 <Link to="/admin/companies" onClick={() => setMobileOpen(false)}>Companies</Link>

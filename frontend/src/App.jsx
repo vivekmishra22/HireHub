@@ -54,7 +54,7 @@ function App() {    // Main App component
     <>
 
       {/* <div className="min-h-screen bg-white text-slate-800 flex flex-col"> */}
-      <div className="min-h-screen bg-gradient-to-br from-cyan-50 via-white to-blue-50 text-gray-800 flex flex-col transition-all duration-300">
+      <div className="min-h-screen text-gray-800 flex flex-col transition-all duration-300">
         {/* <Navbar /> */}
 
         {/* Toast notification */}
@@ -67,9 +67,9 @@ function App() {    // Main App component
           }}
         />
 
-        <div className="flex-1 w-full px-4 sm:px-6 lg:px-8 py-6">
+        <main className="flex-1 w-full px-4 sm:px-6 lg:px-8 py-6">
           <RouterProvider router={appRouter} />
-        </div>
+        </main>
 
         <Footer/>
 

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'        // Importing required React hooks and components
 import { Label } from "@/components/ui/label"             // Label component for form labels
 import { Input } from "@/components/ui/input"             // Input component for form inputs
-import { RadioGroup } from "@/components/ui/radio-group"  // RadioGroup component for radio buttons
 import { Button } from '../ui/button'                     // Button component
 import { Link, useNavigate } from 'react-router-dom'      // For navigation and linking between routes
 import { USER_API_END_POINT } from '@/utils/constant'     // API endpoint for user routes
@@ -27,7 +26,7 @@ const Login = () => {     // Login component
   const dispatch = useDispatch();     // Redux hook to dispatch actions
 
   const changeEventHandler = (e) => {   // Function to update local state whenever an input changes
-    setInput({ ...input, [e.target.name]: e.target.value.trim() });    // Update the corresponding field
+    setInput({ ...input, [e.target.name]: e.target.value });    // Update the corresponding field
   };
 
   // const submitHandler = async (e) => {
@@ -70,7 +69,7 @@ const Login = () => {     // Login component
     if (user) {
       navigate("/");    // Redirect to home if already logged in
     }
-  }, []);
+  }, [user, navigate]);
 
   return (    // JSX returned by component
 
@@ -98,7 +97,7 @@ const Login = () => {     // Login component
           Login to access your dashboard
         </p> */}
 
-            <form onSubmit={submitHandler} className="space-y-4" aria-label="Login form">
+            <form onSubmit={submitHandler} className="space-y-4" aria-label="Login form" aria-busy={loading}>
               <div className="mb-4">
                 <Label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</Label>
                 <Input
@@ -109,7 +108,7 @@ const Login = () => {     // Login component
                   onChange={changeEventHandler}
                   placeholder="you@example.com"
                   autoComplete="email"
-                  className="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-cyan-500 focus:ring focus:ring-cyan-200 transition"
+                  className="mt-1 block w-full rounded-lg  shadow-sm border-gray-300 focus:border-cyan-500 focus:ring focus:ring-cyan-200 transition"
                 />
               </div>
 
@@ -122,6 +121,7 @@ const Login = () => {     // Login component
                   value={input.password}
                   onChange={changeEventHandler}
                   placeholder="********"
+                  autoComplete="current-password"
                   className="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-cyan-500 focus:ring focus:ring-cyan-200 transition"
                 />
               </div>
@@ -195,7 +195,7 @@ const Login = () => {     // Login component
                 </Button> 
                 ) : ( 
                   <Button type="submit"
-                    className="w-full bg-cyan-600 hover:bg-cyan-700 text-white font-semibold py-2 rounded-lg shadow transition"
+                    className="w-full font-semibold py-2 rounded-lg shadow bg-gradient-to-r from-cyan-500 to-pink-500 hover:from-cyan-600 hover:to-pink-600 transition"
                     aria-label="Login button"
                     >
                     Login
@@ -203,7 +203,7 @@ const Login = () => {     // Login component
               )}
               <p className="mt-6 text-center text-sm text-gray-600">
                 Don't have an account?{" "}
-                <Link to="/signup" className="text-cyan-700 hover:underline font-medium" aria-label="Go to signup page" >Sign Up</Link>
+                <Link to="/signup" className="text-cyan-700 hover:underline ml-1" aria-label="Go to signup page" >Sign Up</Link>
               </p>
             </form>
 
