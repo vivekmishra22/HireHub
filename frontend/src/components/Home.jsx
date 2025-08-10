@@ -12,11 +12,11 @@ const Home = () => {
   const { user } = useSelector(store => store.auth);    // Accessing logged-in user info from Redux state
   const navigate = useNavigate();
 
-  useEffect(() => {                                 // If the user is logged in and is a recruiter, redirect to admin company management page
-    if (user?.role === 'recruiter') {
-      navigate("/admin/companies");
-    }
-  }, [user, navigate]);
+  // useEffect(() => {                                 // If the user is logged in and is a recruiter, redirect to admin company management page
+  //   if (user?.role === 'recruiter') {
+  //     navigate("/admin/companies");
+  //   }
+  // }, [user, navigate]);
 
   // useEffect(() => {
   //   useGetAllJobs();
@@ -25,7 +25,7 @@ const Home = () => {
 
   return (
     <div>
-      <Navbar />
+      {/* <Navbar /> */}
       <HeroSection />
       <CategoryCarousel />
       <LatestJobs />

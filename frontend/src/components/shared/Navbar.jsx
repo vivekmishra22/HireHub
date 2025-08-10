@@ -44,7 +44,7 @@ const Navbar = () => {          // Navbar component definition
 
     return (        // JSX return block
 
-        <header className='w-full bg-white border-b shadow-sm sticky top-0 z-50 rounded-full'>
+        <header className='w-full bg-white border-b shadow-sm sticky top-0 z-50'>
             {/* <div className='bg-white py-2'> */}
             <nav className='flex justify-between items-center px-3 sm:px-6 lg:px-20 py-3'>
                 

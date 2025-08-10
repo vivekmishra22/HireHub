@@ -23,7 +23,7 @@ const HeroSection = () => {
                 {/* <span className="mx-auto px-4 py-2 rounded-full bg-gray-100 text-[#F83002] font-medium">
                     No. 1 Hire Hub Website
                 </span> */}
-                <span className="self-center px-5 py-2 rounded-full bg-red-100 text-red-700 font-medium tracking-wide text-sm sm:text-base">
+                <span className="self-center px-5 py-2 rounded-full bg-red-100 text-red-800 font-medium tracking-wide text-sm sm:text-base">
                     India's #1 Job Portal for Your Career Growth
                 </span>
 
@@ -31,7 +31,7 @@ const HeroSection = () => {
                     Search, Apply & <br /> Get Your
                     <span className="text-[#6A38C2]"> Dream Jobs</span>
                 </h1> */}
-                <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold leading-relaxed">
+                <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold leading-relaxed">
                     Find, Apply & <br />Land Your <span className="text-purple-700">Dream Job</span>
                 </h1>
                 <p className="text-gray-700 text-base sm:text-base md:text-lg max-w-2xl mx-auto">
@@ -53,12 +53,12 @@ const HeroSection = () => {
                         type="text"
                         onChange={(e) => setQuery(e.target.value)}
                         placeholder="Search jobs by title, skills, or company"
-                        className="flex-grow px-4 py-2 text-gray-800 placeholder-gray-400 focus:outline-none focus:border-cyan-600 focus:ring-2 focus:ring-cyan-300 transition rounded-l-full text-sm sm:text-base"
+                        className="flex-grow px-4 py-3 text-gray-800 placeholder-gray-500 focus:outline-none focus:border-cyan-600 focus:ring-2 focus:ring-cyan-300 transition rounded-l-full text-sm sm:text-base"
                         onKeyDown={(e) => e.key === "Enter" && searchJobHandler()}
                     />
                     <Button
                         onClick={searchJobHandler}
-                        className="bg-cyan-600 hover:bg-cyan-700 duration-300 rounded-r-full px-4 h-auto py-2"
+                        className="bg-cyan-700 hover:bg-cyan-800 duration-200 rounded-r-full px-4 h-auto py-3"
                         aria-label="Search Jobs"
                     >
                         <Search className="h-4 w-4 sm:h-5 sm:w-5 text-white" />

@@ -21,72 +21,103 @@ import AdminJobs from './components/admin/AdminJobs'
 import PostJob from './components/admin/PostJob'
 import Applicants from './components/admin/Applicants'
 
-// Wrapper component to protect admin routes (e.g., check if user is admin)
+import Layout from './components/Layout'
 
-// Toast (optional UI enhancement)
-import { Toaster } from 'react-hot-toast'
-import Navbar from './components/shared/Navbar'
-import Footer from './components/shared/Footer'
-
-const appRouter = createBrowserRouter([   // Define all application routes using createBrowserRouter
-
-  { path: '/', element: <Home /> },       // Default route (homepage)
+const appRouter = createBrowserRouter([
+  {
+    element: <Layout />,
+    children: [
+      { path: '/', element: <Home /> },
+      { path: '/jobs', element: <Jobs /> },
+      { path: '/browse', element: <Browse /> },
+      { path: '/profile', element: <Profile /> },
+      { path: '/description/:id', element: <JobDescription /> },
+      { path: '/admin/companies', element: <Companies /> },
+      { path: '/admin/companies/create', element: <CompanyCreate /> },
+      { path: '/admin/companies/:id', element: <CompanySetup /> },
+      { path: '/admin/jobs', element: <AdminJobs /> },
+      { path: '/admin/jobs/create', element: <PostJob /> },
+      { path: '/admin/jobs/:id/applicants', element: <Applicants /> }
+    ]
+  },
   { path: '/login', element: <Login /> },
-  { path: '/signup', element: <Signup /> },
-  { path: '/jobs', element: <Jobs /> },
-  { path: '/description/:id', element: <JobDescription /> },    // Job description by ID
-  { path: '/browse', element: <Browse /> },
-  { path: '/profile', element: <Profile /> },
+  { path: '/signup', element: <Signup /> }
+]);
+// const appRouter = createBrowserRouter([   // Define all application routes using createBrowserRouter
+
+//   { path: '/', element: <Home /> },       // Default route (homepage)
+//   { path: '/login', element: <Login /> },
+//   { path: '/signup', element: <Signup /> },
+//   { path: '/jobs', element: <Jobs /> },
+//   { path: '/description/:id', element: <JobDescription /> },    // Job description by ID
+//   { path: '/browse', element: <Browse /> },
+//   { path: '/profile', element: <Profile /> },
 
 
-  // ---------- Admin routes ----------
-  { path: "/admin/companies", element: <Companies /> },             // Admin: List of companies
-  { path: "/admin/companies/create", element: <CompanyCreate /> },   // Admin: Create new company
-  { path: "/admin/companies/:id", element: <CompanySetup /> },       // Admin: Setup/edit specific company
-  { path: "/admin/jobs", element: <AdminJobs /> },                   // Admin: View all jobs
-  { path: "/admin/jobs/create", element: <PostJob /> },              // Admin: Post a new job
-  { path: "/admin/jobs/:id/applicants", element: <Applicants /> },   // Admin: View job applicants
-])
+//   // ---------- Admin routes ----------
+//   { path: "/admin/companies", element: <Companies /> },             // Admin: List of companies
+//   { path: "/admin/companies/create", element: <CompanyCreate /> },   // Admin: Create new company
+//   { path: "/admin/companies/:id", element: <CompanySetup /> },       // Admin: Setup/edit specific company
+//   { path: "/admin/jobs", element: <AdminJobs /> },                   // Admin: View all jobs
+//   { path: "/admin/jobs/create", element: <PostJob /> },              // Admin: Post a new job
+//   { path: "/admin/jobs/:id/applicants", element: <Applicants /> },   // Admin: View job applicants
+// ])
 
 function App() {    // Main App component
 
-  return (
-    <>
+  return  <RouterProvider router={appRouter} />;
+  //  (
+  //   <>
 
-      {/* <div className="min-h-screen bg-white text-slate-800 flex flex-col"> */}
-      <div className="min-h-screen text-gray-800 flex flex-col transition-all duration-300">
-        {/* <Navbar /> */}
+  //     <Toaster
+  //       position="top-right"
+  //       toastOptions={{
+  //         className:
+  //           'bg-cyan-600 hover:bg-cyan-700 text-white font-medium px-4 py-2 rounded-lg shadow-lg transition-all duration-300',
+  //       }}
+  //     />
+  //     <RouterProvider router={appRouter} />
 
-        {/* Toast notification */}
-        <Toaster
-          position="top-right"
-          toastOptions={{
-            className:
-              // 'bg-cyan-500 text-white font-medium px-4 py-2 rounded shadow',
-              'bg-cyan-600 hover:bg-cyan-700 text-white font-medium px-4 py-2 rounded-lg shadow-lg transition-all duration-300',
-          }}
-        />
+  //     {/* <div className="min-h-screen bg-white text-slate-800 flex flex-col"> */}
+  //     {/* <div className="min-h-screen text-gray-800 flex flex-col transition-all duration-300">
+  //       <Navbar /> */}
 
-        <main className="flex-1 w-full px-4 sm:px-6 lg:px-8 py-6">
-          <RouterProvider router={appRouter} />
-        </main>
+  //     {/* Toast notification */}
+  //     {/* <Toaster
+  //         position="top-right"
+  //         toastOptions={{
+  //           className:
+  //             // 'bg-cyan-500 text-white font-medium px-4 py-2 rounded shadow',
+  //             'bg-cyan-600 hover:bg-cyan-700 text-white font-medium px-4 py-2 rounded-lg shadow-lg transition-all duration-300',
+  //         }}
+  //       /> */}
 
-        <Footer/>
+  //     {/* <main className="flex-1 w-full px-4 sm:px-6 lg:px-8 py-6">
+  //         <RouterProvider router={appRouter} />
+  //       </main> */}
+  //     {/* <main className="flex-1 w-full">
+  //         <div className="px-4 sm:px-6 lg:px-8 py-6">
+  //           <RouterProvider router={appRouter} />
+  //         </div>
+  //       </main>
 
-        {/* <footer className="bg-cyan-700 text-white text-center py-4 mt-auto shadow-inner">
-          <p className="text-sm sm:text-base">© {new Date().getFullYear()} HireHub. All rights reserved.</p>
-        </footer> */}
 
-      </div>
+  //       <Footer /> */}
+
+  //     {/* <footer className="bg-cyan-700 text-white text-center py-4 mt-auto shadow-inner">
+  //         <p className="text-sm sm:text-base">© {new Date().getFullYear()} HireHub. All rights reserved.</p>
+  //       </footer> */}
+
+  //     {/* </div> */}
 
 
 
-      {/* <Navbar /> */}
-      {/* <Toaster position="top-right" /> */}
-      {/* RouterProvider connects your routes to the app */}
-      {/* <RouterProvider router={appRouter} /> */}
-    </>
-  )
+  //     {/* <Navbar /> */}
+  //     {/* <Toaster position="top-right" /> */}
+  //     {/* RouterProvider connects your routes to the app */}
+  //     {/* <RouterProvider router={appRouter} /> */}
+  //   </>
+  // )
 }
 
 export default App;   // Export App component as default
