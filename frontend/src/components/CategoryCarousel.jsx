@@ -26,16 +26,16 @@ const CategoryCarousel = () => {
 
     return (
         <div>
-            <Carousel className="w-full max-w-xl mx-auto my-10 sm:my-20 px-4">
-                <CarouselContent>
+            <Carousel className="w-full max-w-xl mx-auto my-5 sm:my-10 px-4">
+                <CarouselContent className='flex gap-x-4 sm:gap-x-6'>
                     {
                         // Loop through each category and render it as a button inside the carousel
                         category.map((cat, index) => (
 
-                            <CarouselItem key={index} className="basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/5">
+                            <CarouselItem key={index} className="basis-auto">
                                 {/* On click, trigger search and redirect to /browse */}
                                 <Button onClick={() => searchJobHandler(cat)} variant="outline"
-                                    className="rounded-full min-w-0 px-3 truncate text-xs sm:text-sm">
+                                    className="rounded-full px-4 truncate text-xs sm:text-sm border-cyan-600 text-cyan-600 hover:bg-cyan-50 transition">
                                         {cat}
                                 </Button>
                             </CarouselItem>
