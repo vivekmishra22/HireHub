@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Label } from './ui/label'
 import { Input } from './ui/input'
 import { Button } from './ui/button'
@@ -20,7 +20,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
     email: user?.email || "",
     phoneNumber: user?.phoneNumber || "",
     bio: user?.profile?.bio || "",
-    skills: user?.profile?.skills.map(skill => skill) || "",  // Convert array to string for input
+    skills: user?.profile?.skills?.map(skill => skill) || "",  // Convert array to string for input
     file: user?.profile?.resume || ""                         // File input will later be overwritten with File object
   });
 
@@ -58,6 +58,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
       if (res.data.success) {
         dispatch(setUser(res.data.user));
         toast.success(res.data.message);
+        setOpen(false);
       }
     } catch (error) {
       console.log(error)
@@ -66,33 +67,33 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
       setLoading(false);
     } 
 
-    setOpen(false);
-    console.log(input);
+    // setOpen(false);
+    // console.log(input);
   }
 
   return (
-    <div>
-      <Dialog open={open}>
+    <>
+      <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className='sm:max-w-[425px]' onInteractOutside={() => setOpen(false)}>
-          <DialogHeader>
-            <DialogTitle>Update Profile</DialogTitle>
+          <DialogHeader className="relative">
+            <DialogTitle className='text-cyan-600 font-semibold'>Update Profile</DialogTitle>
           </DialogHeader>
           <form onSubmit={submitHandler} action="">
             <div className='grid gap-4 py-4'>
 
-              <div className='grid grid-cols-4 items-center gap-4'>
-                <Label htmlFor='name' className={'text-right'}>Name</Label>
-                <Input type='text' id="name" name="name" value={input.fullname} onChange={changeEventHandler} className={'col-span-3'} />
+              <div className='grid grid-cols-1 sm:grid-cols-4 items-center gap-4'>
+                <Label htmlFor='fullname' className={'text-right'}>Name</Label>
+                <Input type='text' id="fullname" name="fullname" value={input.fullname} onChange={changeEventHandler} className={'col-span-3'} />
               </div>
 
-              <div className='grid grid-cols-4 items-center gap-4'>
+              <div className='grid grid-cols-1 sm:grid-cols-4 items-center gap-4'>
                 <Label htmlFor='email' className={'text-right'}>Email</Label>
                 <Input type='email' id="email" name="email" value={input.email} onChange={changeEventHandler} className={'col-span-3'} />
               </div>
 
               <div className='grid grid-cols-4 items-center gap-4'>
                 <Label htmlFor='number' className={'text-right'}>Number</Label>
-                <Input id="number" name="number" value={input.phoneNumber} onChange={changeEventHandler} className={'col-span-3'} />
+                <Input id="number" name="phoneNumber" value={input.phoneNumber} onChange={changeEventHandler} className={'col-span-3'} />
               </div>
 
               <div className='grid grid-cols-4 items-center gap-4'>
@@ -113,14 +114,16 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
             </div>
             <DialogFooter>
               {
-                loading ? <Button className='w-full my-4'><Loader2 className='mr-2 h-4 w-4 animate-spin' />Please wait</Button> :
-                  <Button type='submit' className='w-full my-4'>Update</Button>
+                loading ? ( <Button className='w-full my-4'><Loader2 className='mr-2 h-4 w-4 animate-spin' />Please wait</Button> 
+                ) : (
+                  <Button type='submit' className='w-full my-4'>Save Changes</Button>
+                )
               }
             </DialogFooter>
           </form>
         </DialogContent>
       </Dialog>
-    </div>
+    </>
   )
 }
 

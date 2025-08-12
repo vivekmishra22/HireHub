@@ -22,7 +22,7 @@ const Profile = () => {
 
   return (
     <div>
-      <Navbar />
+      {/* <Navbar /> */}
       <div className='max-w-4xl mx-auto bg-white border border-gray-200 rounded-2xl my-2 p-8'>
         <div className='flex items-center justify-between'>
           <div className='flex items-center gap-4'>
