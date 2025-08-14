@@ -61,11 +61,11 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
         setOpen(false);
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
       toast.error(error.response.data.message);
     } finally {
       setLoading(false);
-    } 
+    }
 
     // setOpen(false);
     // console.log(input);
@@ -74,50 +74,98 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
   return (
     <>
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className='sm:max-w-[425px]' onInteractOutside={() => setOpen(false)}>
-          <DialogHeader className="relative">
-            <DialogTitle className='text-cyan-600 font-semibold'>Update Profile</DialogTitle>
+        <DialogContent className='max-w-lg w-[90%] sm:w-full p-6 rounded-2xl shadow-lg bg-white dark:bg-gray-900'
+        // onInteractOutside={() => setOpen(false)}
+        >
+          <DialogHeader>
+            <DialogTitle className='text-xl font-semibold text-gray-900 dark:text-gray-100'>Update Profile</DialogTitle>
           </DialogHeader>
-          <form onSubmit={submitHandler} action="">
-            <div className='grid gap-4 py-4'>
+          <form onSubmit={submitHandler} action="" className='space-y-4'>
 
-              <div className='grid grid-cols-1 sm:grid-cols-4 items-center gap-4'>
-                <Label htmlFor='fullname' className={'text-right'}>Name</Label>
-                <Input type='text' id="fullname" name="fullname" value={input.fullname} onChange={changeEventHandler} className={'col-span-3'} />
-              </div>
-
-              <div className='grid grid-cols-1 sm:grid-cols-4 items-center gap-4'>
-                <Label htmlFor='email' className={'text-right'}>Email</Label>
-                <Input type='email' id="email" name="email" value={input.email} onChange={changeEventHandler} className={'col-span-3'} />
-              </div>
-
-              <div className='grid grid-cols-4 items-center gap-4'>
-                <Label htmlFor='number' className={'text-right'}>Number</Label>
-                <Input id="number" name="phoneNumber" value={input.phoneNumber} onChange={changeEventHandler} className={'col-span-3'} />
-              </div>
-
-              <div className='grid grid-cols-4 items-center gap-4'>
-                <Label htmlFor='bio' className={'text-right'}>Bio</Label>
-                <Input id="bio" name="bio" value={input.bio} onChange={changeEventHandler} className={'col-span-3'} />
-              </div>
-
-              <div className='grid grid-cols-4 items-center gap-4'>
-                <Label htmlFor='skills' className={'text-right'}>Skills</Label>
-                <Input id="skills" name="skills" value={input.skills} onChange={changeEventHandler} className={'col-span-3'} />
-              </div>
-
-              <div className='grid grid-cols-4 items-center gap-4'>
-                <Label htmlFor='file' className={'text-right'}>Resume</Label>
-                <Input type={'file'} accept='application/pdf' id="file" name="file" onChange={fileChangeHandler} className={'col-span-3'} />
-              </div>
-
+            <div className='flex flex-col space-y-1'>
+              <Label htmlFor='fullname' className='text-gray-700 dark:text-gray-300'>Name</Label>
+              <Input type='text' id="fullname" name="fullname"
+                value={input.fullname} onChange={changeEventHandler}
+                className='bg-gray-50 dark:bg-gray-800 border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100' />
             </div>
-            <DialogFooter>
+
+            <div className='flex flex-col space-y-1'>
+              <Label htmlFor='email' className='text-gray-700 dark:text-gray-300' >Email</Label>
+              <Input type='email' id="email" name="email"
+                value={input.email} onChange={changeEventHandler}
+                className='bg-gray-50 dark:bg-gray-800 border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100' />
+            </div>
+
+            <div className='flex flex-col space-y-1'>
+              <Label htmlFor='number' className='text-gray-700 dark:text-gray-300'>Number</Label>
+              <Input id="number" name="phoneNumber"
+                value={input.phoneNumber} onChange={changeEventHandler}
+                className='bg-gray-50 dark:bg-gray-800 border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100' />
+            </div>
+
+            <div className='flex flex-col space-y-1'>
+              <Label htmlFor='bio' className='text-gray-700 dark:text-gray-300' >Bio</Label>
+              <Input id="bio" name="bio"
+                value={input.bio} onChange={changeEventHandler}
+                className='bg-gray-50 dark:bg-gray-800 border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100' />
+            </div>
+
+            <div className='flex flex-col space-y-1'>
+              <Label htmlFor='skills' className='text-gray-700 dark:text-gray-300'>Skills</Label>
+              <Input id="skills" name="skills"
+                value={input.skills} onChange={changeEventHandler}
+                className='bg-gray-50 dark:bg-gray-800 border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100' />
+            </div>
+
+            {/* <div className='text-gray-700 dark:text-gray-300'>
+              <Label htmlFor='file' className='text-gray-700 dark:text-gray-300'>Resume</Label>
+              <Input type='file' accept='application/pdf' id="file" name="file"
+                onChange={fileChangeHandler}
+                className='bg-gray-50 dark:bg-gray-800 border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100' />
+            </div> */}
+
+            <div className="flex flex-col space-y-1">
+              <Label htmlFor="file" className="text-gray-700 dark:text-gray-300">
+                Resume
+              </Label>
+
+              <div
+                onClick={() => document.getElementById("fileInput").click()}
+                className="flex items-center bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-md px-3 py-2 cursor-pointer"
+              >
+                <span className="px-3 py-1 rounded text-sm">
+                  Choose File : 
+                </span>
+                <span className="truncate text-gray-700 dark:text-gray-300">
+                  {input.file?.name || user?.profile?.resumeOriginalName || "No file chosen"}
+                </span>
+              </div>
+
+              <input
+                id="fileInput"
+                type="file"
+                accept="application/pdf"
+                name="file"
+                className="hidden"
+                onChange={fileChangeHandler}
+              />
+            </div>
+
+            <DialogFooter className='flex flex-col-reverse sm:flex-row gap-3 pt-4'>
+              <DialogClose asChild>
+                <Button variant="outline" type="button"
+                  className='border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800' >
+                  Cancel</Button>
+              </DialogClose>
               {
-                loading ? ( <Button className='w-full my-4'><Loader2 className='mr-2 h-4 w-4 animate-spin' />Please wait</Button> 
-                ) : (
-                  <Button type='submit' className='w-full my-4'>Save Changes</Button>
-                )
+                loading ?
+                  (<Button className='bg-blue-600 hover:bg-blue-700 text-white shadow-md'>
+                    <Loader2 className='mr-2 h-4 w-4 animate-spin' />
+                    Please wait</Button>
+                  ) : (
+                    <Button type='submit' className='bg-blue-600 hover:bg-blue-700 text-white shadow-md'>
+                      Save Changes</Button>
+                  )
               }
             </DialogFooter>
           </form>

@@ -47,7 +47,7 @@ const Navbar = () => {          // Navbar component definition
         <header className='w-full bg-white border-b shadow-sm sticky top-0 z-50'>
             {/* <div className='bg-white py-2'> */}
             <nav className='flex justify-between items-center px-3 sm:px-6 lg:px-20 py-3'>
-                
+
                 <Link to='/'>
                     <h1 className='text-2xl font-bold text-gray-900'>
                         Hire<span className='text-cyan-600'>Hub</span>
@@ -145,9 +145,17 @@ const Navbar = () => {          // Navbar component definition
                                         </div>
                                     </div>
 
-                                    <Link to="/profile" className='flex items-center gap-2 p-2 hover:bg-cyan-50 rounded-md text-sm'>
+                                    {
+                                        user && user.role === 'student' && (
+                                            <Link to="/profile" className='flex items-center gap-2 p-2 hover:bg-cyan-50 rounded-md text-sm'>
+                                                <UserRound size={16} /> Profile
+                                            </Link>
+                                        )
+                                    }
+
+                                    {/* <Link to="/profile" className='flex items-center gap-2 p-2 hover:bg-cyan-50 rounded-md text-sm'>
                                         <UserRound size={16} /> Profile
-                                    </Link>
+                                    </Link> */}
                                     <button onClick={logoutHandler} className='w-full flex items-center gap-2 p-2 hover:bg-red-50 rounded-md text-sm text-red-600'>
                                         <LogOut size={16} /> Logout
                                     </button>
