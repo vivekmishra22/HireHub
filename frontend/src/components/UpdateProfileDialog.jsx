@@ -22,6 +22,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
     bio: user?.profile?.bio || "",
     skills: user?.profile?.skills?.map(skill => skill) || "",  // Convert array to string for input
     file: user?.profile?.resume || ""                         // File input will later be overwritten with File object
+    // file: null                                    // Start with null so it's only set when new file is chosen
   });
 
   const dispatch = useDispatch();       // Redux dispatch function
@@ -133,7 +134,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                 onClick={() => document.getElementById("fileInput").click()}
                 className="flex items-center bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-md px-3 py-2 cursor-pointer"
               >
-                <span className="px-3 py-1 rounded text-sm">
+                <span className="px-2 rounded text-sm">
                   Choose File : 
                 </span>
                 <span className="truncate text-gray-700 dark:text-gray-300">

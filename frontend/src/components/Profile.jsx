@@ -11,6 +11,7 @@ import { useSelector } from 'react-redux'                 // Import useSelector 
 import useGetAppliedJobs from '@/hooks/useGetAppliedJobs' // Custom hook to fetch user's applied jobs data
 
 // const skills = ["HTML", "CSS", "JavaScript", "React.js"]
+// const isResume = Boolean(user?.profile?.resume);
 const isResume = true;
 
 const Profile = () => {
@@ -21,8 +22,7 @@ const Profile = () => {
   const { user } = useSelector(store => store.auth);  // Get the authenticated user details from Redux store
 
   return (
-    <div className="pb-8">
-      {/* <Navbar /> */}
+    <>
       <div className='max-w-4xl mx-auto bg-white border border-gray-200 rounded-2xl my-6 p-6 sm:p-8'>
         <div className='flex flex-col sm:flex-row items-center sm:items-start justify-between gap-4 sm:gap-6'>
           <div className='flex items-center gap-4'>
@@ -55,11 +55,15 @@ const Profile = () => {
         <div className='my-6'>
           <h2 className='font-semibold text-lg text-cyan-600'>Skills</h2>
           <div className='flex flex-wrap gap-2 mt-3'>
+            {/* {user?.profile?.skills?.length
+              ? user.profile.skills.map((item, index) => <Badge key={index}>{item}</Badge>)
+              : <span className='text-gray-500'>NA</span>} */}
+
             {
               // Check if skills exist, then display them using Badge component
-              user?.profile.skills.length != 0 
-              ? user?.profile.skills.map((item, index) => <Badge key={index}>{item}</Badge>) 
-              : <span className='text-gray-500'>NA</span>
+              user?.profile?.skills?.length != 0
+                ? user?.profile.skills.map((item, index) => <Badge key={index}>{item}</Badge>)
+                : <span className='text-gray-500'>NA</span>
               // skills.length != 0 ? skills.map((item, index) => <Badge key={index}>{item}</Badge>) : <span>NA</span>
             }
           </div>
@@ -67,14 +71,14 @@ const Profile = () => {
         <div className='my-6'>
           <Label className='text-lg font-semibold text-cyan-600'>Resume</Label>
           {
-            isResume ? <a className='block text-blue-800 hover:underline mt-2 break-words' href={user?.profile?.resume} 
-            target='_blank'>{user?.profile?.resumeOriginalName}</a> : <span className='text-gray-500'>NA</span>
+            isResume ? <a className='block text-blue-800 hover:underline mt-2 break-words' href={user?.profile?.resume}
+              target='_blank'>{user?.profile?.resumeOriginalName}</a> : <span className='text-gray-500'>NA</span>
             // isResume ? <a className='text-blue-500 w-full hover:underline cursor-pointer' href="https://youtube.com" target='_blank'>Youtube</a> : <span>NA</span>
           }
         </div>
 
       </div>
-      <div className='max-w-4xl mx-auto bg-white rounded-2xl my-6 p-6 sm:p-8'>
+      <div className='max-w-4xl mx-auto bg-white rounded-2xl my-6 px-4 sm:px-8'>
         <h1 className='font-semibold text-lg text-cyan-600 mb-4'>Applied Jobs</h1>
         {/* Applied job table */}
         <AppliedJobTable />
@@ -82,7 +86,7 @@ const Profile = () => {
 
       <UpdateProfileDialog open={open} setOpen={setOpen} />
 
-    </div>
+    </>
   )
 }
 

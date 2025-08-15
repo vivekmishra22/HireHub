@@ -138,8 +138,9 @@ export const updateProfile = async (req, res) => {
         const { fullname, email, phoneNumber, bio, skills } = req.body;
         const file = req.file;
         // cloudinary code, Convert uploaded resume (PDF) to data URI and upload to Cloudinary
-        const fileUri = getDataUri(file);
-        const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
+
+        // const fileUri = getDataUri(file);
+        // const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
 
         // if (!fullname || !email || !phoneNumber || !bio || !skills) {
         //     return res.status(400).json({
@@ -171,11 +172,22 @@ export const updateProfile = async (req, res) => {
         if (bio) user.profile.bio = bio
         if (skills) user.profile.skills = skillsArray
 
-        // Upload resume if provided
-        if(cloudResponse){
-            user.profile.resume = cloudResponse.secure_url  // save the cloudinary url
-            user.profile.resumeOriginalName = file.originalname // save the original file name
+        // Upload resume only if file is provided
+        if (file) {
+            const fileUri = getDataUri(file);
+            const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
+
+            user.profile.resume = cloudResponse.secure_url;  // save Cloudinary URL
+            user.profile.resumeOriginalName = file.originalname; // save original file name
         }
+        
+        // // Upload resume if provided
+        // if(cloudResponse){
+        //     // const fileUri = getDataUri(file);
+        // // const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
+        //     user.profile.resume = cloudResponse.secure_url  // save the cloudinary url
+        //     user.profile.resumeOriginalName = file.originalname // save the original file name
+        // }
 
         // user.fullname = fullname,
         //     user.email = email,
