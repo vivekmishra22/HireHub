@@ -62,7 +62,11 @@ const Profile = () => {
             {
               // Check if skills exist, then display them using Badge component
               user?.profile?.skills?.length != 0
-                ? user?.profile.skills.map((item, index) => <Badge key={index}>{item}</Badge>)
+                ? user?.profile.skills.map((item, index) =>
+                  <Badge key={index}
+                    className='bg-blue-200 text-blue-900 hover:bg-blue-300 transition-colors duration-200'>
+                    {item}
+                  </Badge>)
                 : <span className='text-gray-500'>NA</span>
               // skills.length != 0 ? skills.map((item, index) => <Badge key={index}>{item}</Badge>) : <span>NA</span>
             }
