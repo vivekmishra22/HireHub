@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-import Navbar from './shared/Navbar'
 import Job from './Job'                                     // Job card component for displaying individual job info
 import { useDispatch, useSelector } from 'react-redux'      // Hooks for interacting with Redux store
 import { setSearchedQuery } from '@/redux/jobSlice'         // Action to reset search query
@@ -22,7 +21,6 @@ const Browse = () => {
     
     return (
         <div>
-            <Navbar />
             <div className='max-w-7xl mx-auto my-10'>
                 <h1 className='font-bold text-xl my-10'>Search Results ({allJobs.length})</h1>
                 <div className='grid grid-cols-3 gap-4'>
