@@ -6,6 +6,8 @@ import { motion } from 'framer-motion';
 
 const Jobs = () => {
 
+  // abc
+
   const { allJobs, searchedQuery } = useSelector(store => store.job);   // Get all jobs and the search query from Redux store (job slice)
   const [filterJobs, setFilterJobs] = useState(allJobs);                // Local state to store filtered jobs
 
