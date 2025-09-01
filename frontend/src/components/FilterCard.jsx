@@ -15,7 +15,7 @@ const filterData = [          // Predefined filter categories with options
   },
   {
     filterType: "Salary",
-    array: ["0 - 40k", "42-1lakh", "1lakh to 5lakh"]
+    array: ["0 - 40K", "40K - 1L", "1L - 5L"]
   },
 ]
 
@@ -33,22 +33,22 @@ const FilterCard = () => {
   },[selectedValue]);
   
   return (
-    <div className='w-full bg-white p-3 rounded-md'>
-      <h1 className='font-bold text-lg'>Filter Jobs</h1>
+    <div className='w-full bg-white p-3 rounded-lg '>
+      <h1 className='font-bold text-base md:text-lg'>Filter Jobs</h1>
       <hr className='mt-3' />
       <RadioGroup value={selectedValue} onValueChange={changeHandler} >
         {
           filterData.map((data, index) => (
-            <div>
+            <div key={`filter-group-${index}`} className="space-y-2 mt-4">
               {/* Key prop added to avoid React warning */}
-              <h1 className='font-bold text-lg'>{data.filterType}</h1>
+              <h1 className='font-bold text-sm md:text-base text-gray-700'>{data.filterType}</h1>
               {
                 data.array.map((item, idx) => {
-                  const itemId=`r${index}-${idx}`
+                  const itemId=`id${index}-${idx}`
                   return (
-                    <div className='flex items-center space-x-2 my-2'>
-                      <RadioGroupItem value={item} id={itemId} />
-                      <Label htmlFor={itemId}>{item}</Label>
+                    <div key={itemId} className='flex items-center space-x-2 my-2'>
+                      <RadioGroupItem value={item} id={itemId} className="space-y-6" />
+                      <Label htmlFor={itemId} className="text-gray-500">{item}</Label>
                     </div>
                   )
                 })
