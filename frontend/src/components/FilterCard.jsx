@@ -34,6 +34,7 @@ const FilterCard = () => {
   
   return (
     <div className='w-full bg-white p-3 rounded-lg '>
+    // this is comment
       <h1 className='font-bold text-base md:text-lg'>Filter Jobs</h1>
       <hr className='mt-3' />
       <RadioGroup value={selectedValue} onValueChange={changeHandler} >
