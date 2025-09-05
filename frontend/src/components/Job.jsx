@@ -23,6 +23,7 @@ const Job = ({job}) => {
         <div className="p-5 rounded-md shadow-lg bg-white border border-gray-100">
             <div className="flex items-center justify-between">
                 {/* Show "Today" if posted today, else show X days ago */}
+                {/* Show "Today" if posted today, else show X days ago */}
                 <p className="text-sm text-gray-500">{daysAgoFunction(job?.createdAt) === 0 ? "Today" : `${daysAgoFunction(job?.createdAt)} days ago` }</p>
                 <Button variant="outline" className={"rounded-full"} size="icon">
                     <Bookmark />
