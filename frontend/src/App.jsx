@@ -121,4 +121,3 @@ function App() {    // Main App component
 }
 
 export default App;   // Export App component as default
-// export default App;   // Export App component as default
